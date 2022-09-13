@@ -1,3 +1,7 @@
-.test {
-  background-color: red;
+a.navbar-brand {
+  color: black !important;
+}
+
+a.nav-link {
+  color: black !important;
 }/*# sourceMappingURL=main.css.map */

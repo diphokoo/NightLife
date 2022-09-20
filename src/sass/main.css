@@ -1,3 +1,11 @@
+a.nav-link {
+  top: 53px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+  color: #c7c3c9;
+}
+
 .headerColor {
   position: absolute;
   width: 1440px;

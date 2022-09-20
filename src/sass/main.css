@@ -1,1 +1,10 @@
-/*# sourceMappingURL=main.css.map */
+.headerColor {
+  position: absolute;
+  width: 1440px;
+  height: 720px;
+  left: 140px;
+  top: 0px;
+  background: linear-gradient(118.98deg, #EDA046 -2.11%, #5822CC 63.58%);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}/*# sourceMappingURL=main.css.map */

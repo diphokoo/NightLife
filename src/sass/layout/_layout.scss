@@ -1,0 +1,13 @@
+$primaryColor:  #5822CC;
+$secondaryColor: #EDA046;
+
+.headerColor{
+    position: absolute;
+    width: 1440px;
+    height: 720px;
+    left: 140px;
+    top: 0px;
+    background: linear-gradient(118.98deg, $secondaryColor -2.11%, $primaryColor 63.58%);
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}

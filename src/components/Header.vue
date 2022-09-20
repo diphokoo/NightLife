@@ -1,5 +1,7 @@
 <template>
-    <p>test</p>
+    <div class="headerColor">
+        
+    </div>
 </template>
 <script>
     export default {

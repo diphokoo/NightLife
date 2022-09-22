@@ -3,6 +3,9 @@
         <img id="imgHeader" src="./assests/kabzanPhori-PhotoRoom.png">
         <i class="fa-solid fa-chevron-right"></i>
         <i class="fa-solid fa-chevron-left"></i>
+
+        <h2 class="subheader"> Kabza De Small ft Maphorisa - Road Trip </h2>
+        <p class="dscP">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
     </div>
 </template>
 
@@ -34,6 +37,35 @@
         font-size: 60px;
         color: #EDA046;
         /* transform: rotate(90deg); */
+    }
+
+    .subheader {
+        position: absolute;
+        width: 443px;
+        height: 98px;
+        left: 820px;
+        top: 218px;
+
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 49px;
+    }
+
+    .dscP {
+        position: absolute;
+        width: 443px;
+        height: 69px;
+        left: 820px;
+        top: 342px;
+
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 130%;
+        /* or 23px */
     }
         
     </style>

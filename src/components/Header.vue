@@ -6,6 +6,10 @@
 
         <h2 class="subheader"> Kabza De Small ft Maphorisa - Road Trip </h2>
         <p class="dscP">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+    
+        <button class="tickets">Get Tickets</button>
+        <button class="learn">Learn More</button>
+    
     </div>
 </template>
 
@@ -67,7 +71,32 @@
         line-height: 130%;
         /* or 23px */
     }
+
+    .tickets {
+        position: absolute;
+        width: 182px;
+        height: 60px;
+        left: 812px;
+        top: 441px;
+
+        background: #F5167E;
+        box-shadow: 0px 10px 50px rgba(61, 55, 241, 0.25);
+        border-radius: 50px;
+    }
+    
+    .learn {
+        box-sizing: border-box;
+
+        position: absolute;
+        width: 182px;
+        height: 60px;
+        left: 1014px;
+        top: 441px;
+
         
+        filter: drop-shadow(0px 10px 50px rgba(61, 55, 241, 0.25));
+        border-radius: 50px;
+    }
     </style>
 <script>
     export default {

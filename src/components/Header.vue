@@ -96,7 +96,7 @@
         
         filter: drop-shadow(0px 10px 50px rgba(61, 55, 241, 0.25));
         border-radius: 50px;
-            }
+    }
     </style>
 <script>
     export default {

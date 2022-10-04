@@ -1,4 +1,8 @@
 # NightLife
+project is based on the below ui design 
+
+https://www.figma.com/file/GkFbhJ6zjZn91nlndohgGV/NightClub-Live-Events-Website?node-id=0%3A1
+
 
 This template should help get you started developing with Vue 3 in Vite.
 

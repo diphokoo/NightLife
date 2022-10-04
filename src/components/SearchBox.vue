@@ -1,5 +1,7 @@
 <template>
-    <p>this works</p>
+    <div class="recSearchBox">
+        <p>test</p>
+    </div>
 </template>
 <script>
     export default {

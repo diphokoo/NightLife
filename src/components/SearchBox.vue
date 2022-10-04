@@ -1,6 +1,8 @@
 <template>
     <div class="recSearchBox">
-        <p>test</p>
+        <div class="time">
+            
+        </div>
     </div>
 </template>
 <script>

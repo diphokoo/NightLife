@@ -1,48 +1,79 @@
 <template>
  <div class="upcomingEvents">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Upcoming Events</a>
+    <nav class="navbar navbar-expand-lg navbar-light">
+    <h4 class="navbar-brand" href="#">Upcoming Events</h4>
 
-    <div class="collapse navbar-collapse float-right">
+    <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
         
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="weekDays" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Weekdays
-            </a>
-            <div class="dropdown-menu" aria-labelledby="weekDays">
-                <a class="dropdown-item" href="#">Monday</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="eventType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Event Type
-            </a>
-            <div class="dropdown-menu" aria-labelledby="eventType">
-                <a class="dropdown-item" href="#">Monday</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="anyCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Any Category
-            </a>
-            <div class="dropdown-menu" aria-labelledby="anyCategory">
-                <a class="dropdown-item" href="#">Monday</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
+            <li class="nav-item dropdown bg-light">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Weekdays</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </li>
+            <li class="nav-item dropdown bg-light">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Event Type</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </li>
+            <li class="nav-item dropdown bg-light">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Any Category</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </li>
         </ul>
     </div>
     </nav>
  </div>
 
 </template>
+
+<style scoped>
+    
+.form-select {
+    /* position: absolute; */
+    width: 168px !important;
+    height: 46px !important;
+    left: 719px !important;
+    top: 896px !important;
+    background: #F2F4FF !important;
+    border-radius: 50px !important;
+    /* color: white; */
+    color: #1D275F !important; 
+}
+
+li.nav-item.dropdown.bg-light {
+    margin: 10px;
+}
+
+h4.navbar-brand {
+    /* position: absolute; */
+    width: 319px;
+    height: 49px;
+    left: 177px;
+    top: 894px;
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 49px;
+    color: #242565 !important;
+}
+
+ul.navbar-nav {
+    /* margin-right: -315px; */
+    padding-left: 530px;
+}
+</style>
 
 <script>
     export default {

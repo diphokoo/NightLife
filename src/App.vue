@@ -2,7 +2,7 @@
   <div class="container">
     <NavBar />
     <Header />
-    <SearchBox />
+    <Search />
     <UpcomingEvent />
     <Brand />
   </div>
@@ -13,7 +13,7 @@
 
 import NavBar from './components/NavBar.vue'
 import Header from './components/Header.vue'
-import SearchBox from './components/searchBox.vue'
+import Search from './components/Search.vue'
 import UpcomingEvent from './components/UpcomingEvent.vue'
 import Brand from './components/Brand.vue'
 
@@ -22,10 +22,10 @@ export default {
   components: {
     NavBar,
     Header,
-    SearchBox,
+    Search,
     UpcomingEvent,
     Brand
-}
+  }
 }
 </script>
 <style scoped>

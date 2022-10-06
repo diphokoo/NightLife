@@ -131,7 +131,9 @@
             </div>
         </div>
     </div>
- </div>
+
+    <a class="btn loadMore" href="#" role="button">Load More</a>
+</div>
 
 
 </template>
@@ -241,7 +243,21 @@ ul.navbar-nav {
 
 
     color: #6A6A6A;
-    }
+}
+
+.loadMore {
+    box-sizing: border-box;
+    position: absolute;
+    width: 180px;
+    height: 33px;
+    left: 536px;
+    margin-top: 25px;
+    border: 1.5px solid #3D37F1;
+    color: #3D37F1;
+    filter: drop-shadow(0px 10px 50px rgba(61, 55, 241, 0.25));
+    border-radius: 50px;
+}
+
 
 </style>
 

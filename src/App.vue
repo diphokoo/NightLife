@@ -2,7 +2,7 @@
   <div class="container">
     <NavBar />
     <Header />
-    <SearchBox />
+    <Search />
     <UpcomingEvent />
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import Header from './components/Header.vue'
-import SearchBox from './components/searchBox.vue'
+import Search from './components/Search.vue'
 import UpcomingEvent from './components/UpcomingEvent.vue'
 
 export default {
@@ -18,7 +18,7 @@ export default {
   components: {
     NavBar,
     Header,
-    SearchBox,
+    Search,
     UpcomingEvent
   }
 }

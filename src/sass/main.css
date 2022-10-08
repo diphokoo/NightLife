@@ -72,4 +72,16 @@ a.nav-link {
   line-height: 23px;
   text-align: center;
   color: #6A6A6A;
+}
+
+.brandImg {
+  mix-blend-mode: luminosity;
+}
+
+.BrandList {
+  margin-top: 180px;
+}
+
+.row.d-flex.justify-content-center.secondRow {
+  margin-left: 230PX;
 }/*# sourceMappingURL=main.css.map */

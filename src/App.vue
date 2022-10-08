@@ -5,6 +5,7 @@
     <SearchB />
     <UpcomingEvent />
     <Brand />
+    <Blog />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import Headers from './components/Headers.vue'
 import SearchB from './components/Search.vue'
 import UpcomingEvent from './components/UpcomingEvent.vue'
 import Brand from './components/Brand.vue'
+import Blog from './components/Blog.vue'
 
 export default {
   name: 'App',
@@ -24,7 +26,8 @@ export default {
     Headers,
     SearchB,
     UpcomingEvent,
-    Brand
+    Brand,
+    Blog
 }
 }
 </script>

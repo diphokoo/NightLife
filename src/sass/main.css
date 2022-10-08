@@ -84,4 +84,12 @@ a.nav-link {
 
 .row.d-flex.justify-content-center.secondRow {
   margin-left: 230PX;
+}
+
+.blog {
+  position: absolute;
+  width: 1086px;
+  height: 706px;
+  left: 177px;
+  top: 2450px;
 }/*# sourceMappingURL=main.css.map */

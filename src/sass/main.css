@@ -57,4 +57,19 @@ a.nav-link {
   line-height: 49px;
   /* identical to box height */
   color: #242565;
+}
+
+.brandContent {
+  position: absolute;
+  width: 613px;
+  height: 46px;
+  left: 340px;
+  top: 70px;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  text-align: center;
+  color: #6A6A6A;
 }/*# sourceMappingURL=main.css.map */

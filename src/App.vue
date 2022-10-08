@@ -6,6 +6,7 @@
     <UpcomingEvent />
     <Brand />
     <Blog />
+    <Footer />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import SearchB from './components/Search.vue'
 import UpcomingEvent from './components/UpcomingEvent.vue'
 import Brand from './components/Brand.vue'
 import Blog from './components/Blog.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
@@ -27,7 +29,8 @@ export default {
     SearchB,
     UpcomingEvent,
     Brand,
-    Blog
+    Blog,
+    Footer
 }
 }
 </script>

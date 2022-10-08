@@ -44,9 +44,9 @@ h5.tHeader {
 </style>
 <script>
     export default {
-        name: 'Search',
+        name: 'SearchB',
         props: {
-            Search: Array,
+            SearchB: Array,
         }
     }
 </script>

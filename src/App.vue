@@ -1,24 +1,24 @@
 <template>
-  <div class="container">
+    <div class="container">
     <NavBar />
-    <Header />
-    <Search />
+    <Headers />
+    <SearchB />
     <UpcomingEvent />
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
-import Header from './components/Header.vue'
-import Search from './components/Search.vue'
+import Headers from './components/Headers.vue'
+import SearchB from './components/Search.vue'
 import UpcomingEvent from './components/UpcomingEvent.vue'
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    Header,
-    Search,
+    Headers,
+    SearchB,
     UpcomingEvent
   }
 }

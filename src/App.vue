@@ -25,7 +25,7 @@ export default {
     SearchB,
     UpcomingEvent,
     Brand
-  }
+}
 }
 </script>
 <style scoped>

@@ -23,7 +23,8 @@ export default {
     NavBar,
     Headers,
     SearchB,
-    UpcomingEvent
+    UpcomingEvent,
+    Brand
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="brand">
         <p>this works</p>
     </div>
 </template>

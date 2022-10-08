@@ -92,4 +92,17 @@ a.nav-link {
   height: 706px;
   left: 177px;
   top: 2450px;
+}
+
+.blogH3 {
+  position: absolute;
+  width: 84px;
+  height: 49px;
+  left: 600px;
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 49px;
+  color: #242565;
 }/*# sourceMappingURL=main.css.map */

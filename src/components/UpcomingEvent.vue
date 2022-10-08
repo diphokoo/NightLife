@@ -69,7 +69,7 @@
 
 
         <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster3.jfif" class="card-img-top" alt="...">
+            <img src="./assests/poster3.png" class="card-img-top" alt="...">
             <div class="card-body row">
                 <div class="col-sm-4">
                     <span class="month">SEP</span>

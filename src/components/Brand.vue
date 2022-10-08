@@ -1,6 +1,6 @@
 <template>
     <div class="brand">
-        <p>this works</p>
+        <h3 class="brandH3">Our partners</h3>
     </div>
 </template>
 <script>

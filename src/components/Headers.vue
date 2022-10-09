@@ -4,11 +4,11 @@
         <i class="fa-solid fa-chevron-right"></i>
         <i class="fa-solid fa-chevron-left"></i>
 
-        <h2 class="subheader"> Kabza De Small ft Maphorisa - Road Trip </h2>
-        <p class="dscP">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+        <h2 class="subheader"> {{ subheader }} </h2>
+        <p class="dscP">{{ subParagraph }}</p>
     
-        <button class="tickets">Get Tickets</button>
-        <button class="learn">Learn More</button>
+        <button class="tickets">{{ tickets }}</button>
+        <button class="learn">{{ learn }}</button>
     
     </div>
 </template>
@@ -103,6 +103,14 @@
         name: 'Headers',
         props: {
             Headers: Array,
+        },
+        data() {
+            return {
+                subheader: "Kabza De Small ft Maphorisa - Road Trip",
+                subParagraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+                tickets: "Get Tickets",
+                learn: "Learn More"
+            }
         }
     }
 </script>

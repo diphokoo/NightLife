@@ -1,34 +1,19 @@
 <template>
  <div class="upcomingEvents">
     <nav class="navbar navbar-expand-lg navbar-light">
-    <h4 class="navbar-brand" href="#">Upcoming Events</h4>
+    <h4 class="navbar-brand" href="#">{{ title }}</h4>
 
     <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
         
             <li class="nav-item dropdown bg-light">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Weekdays</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='weekdays' placeholder='Weekdats' style="color: white;"></ejs-dropdownlist>
             </li>
             <li class="nav-item dropdown bg-light">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Event Type</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='eventType' placeholder='Event Type' style="color: white;"></ejs-dropdownlist>
             </li>
             <li class="nav-item dropdown bg-light">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Any Category</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='category' placeholder='Any category' style="color: white;"></ejs-dropdownlist>
             </li>
         </ul>
     </div>
@@ -139,7 +124,9 @@
 </template>
 
 <style scoped>
-    
+    @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
+    @import "../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+    @import "../../node_modules/@syncfusion/ej2-vue-dropdowns/styles/material.css";
 .form-select {
     /* position: absolute; */
     width: 168px !important;
@@ -262,10 +249,40 @@ ul.navbar-nav {
 </style>
 
 <script>
+    import { DropDownListComponent } from "@syncfusion/ej2-vue-dropdowns";
+
+
     export default {
         name: 'UpcomingEvent',
         props: {
             UpcomingEvent: Array,
+        },
+        components: {
+        "ejs-dropdownlist": DropDownListComponent
+        },
+        data () {
+            return {
+                title: 'Upcoming Event',
+                weekdays: [
+                'Monday', 
+                'Tuesday', 
+                'Wednesday', 
+                'Thursday', 
+                'Friday', 
+                'Saturday', 
+                'Sunday'
+                ],
+                eventType:[
+                    'concerts',
+                    'club',
+                    'bash'
+                ],
+                category:[
+                    'Outdoor',
+                    'Indoor'
+                ]
+            }
         }
+        
     }
 </script>

@@ -49,11 +49,29 @@
 
     <!--Grid column-->
     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-      <h5 class="text-uppercase mb-4">Careers</h5>
+      <h5 class="mb-4">Eventick</h5>
 
       <ul class="list-unstyled">
         <li>
-          <a href="#!" class="text-white">Jobs</a>
+          <a href="#!" class="text-white">About Us</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">Press</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">Contact Us</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">Help Center</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">How It Works</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">Privacy</a>
+        </li>
+        <li>
+          <a href="#!" class="text-white">Terms</a>
         </li>
       </ul>
     </div>
@@ -61,14 +79,14 @@
 
     <!--Grid column-->
     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-      <h5 class="text-uppercase mb-4">Sign up to our newsletter</h5>
+      <h5 class="mb-4">Stay In The Loop</h5>
+
+      <p>Join our mailing list to stay in the loop with our newest for Event and concert</p>
 
       <div class="form-outline form-white mb-4">
-        <input type="email" id="form5Example2" class="form-control" />
-        <label class="form-label" for="form5Example2">Email address</label>
-      </div>
-
-      <button type="submit" class="btn btn-outline-white btn-block">Subscribe</button>
+        <input type="email" id="form5Example2" class="form-control" placeholder="Enter your email address.."/>
+        <button type="submit" class="btn subscribeBtn">Subscribe</button>
+    </div>
     </div>
     <!--Grid column-->
   </div>

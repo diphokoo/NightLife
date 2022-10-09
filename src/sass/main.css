@@ -169,4 +169,8 @@ footer {
   top: 3213px;
   background: #0A075F;
   color: white;
+}
+
+.text-white {
+  text-decoration: none !important;
 }/*# sourceMappingURL=main.css.map */

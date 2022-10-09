@@ -28,23 +28,20 @@
 
     <!--Grid column-->
     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-      <h5 class="text-uppercase mb-4">Assistance</h5>
+      <h5 class="mb-4">Plan Events</h5>
 
       <ul class="list-unstyled">
         <li>
-          <a href="#!" class="text-white">Contact us</a>
+          <a href="#!" class="text-white">Create</a>
         </li>
         <li>
-          <a href="#!" class="text-white">Size Guide</a>
+          <a href="#!" class="text-white">Sell Tickets</a>
         </li>
         <li>
-          <a href="#!" class="text-white">Shipping Information</a>
+          <a href="#!" class="text-white">Online RSVP</a>
         </li>
         <li>
-          <a href="#!" class="text-white">Returns & Exchanges</a>
-        </li>
-        <li>
-          <a href="#!" class="text-white">Payment</a>
+          <a href="#!" class="text-white">Online Events</a>
         </li>
       </ul>
     </div>

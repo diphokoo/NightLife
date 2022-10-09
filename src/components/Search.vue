@@ -2,12 +2,7 @@
     <div class="recSearchBox row">
         <div class="col-md-4">
             <h5 class="tHeader">Search Event</h5>
-            <select class="form-select">
-                <option selected>Kabza De Small Road Trip</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Event' placeholder='Select a game' style="color: white;"></ejs-dropdownlist>
         </div> 
         <div class="col-md-4">
             <h5 class="tHeader">Place</h5>
@@ -30,23 +25,41 @@
     </div>
 </template>
 <style scoped>
-
+@import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-dropdowns/styles/material.css";
 h5.tHeader {
     margin-top: 20px;
     margin-left: 10px;
 } 
 
-.form-select {
+.dropDown {
     color: white !important;
-    background-color: transparent !important;
-    border: 1px solid transparent !important;
 }
+
 </style>
 <script>
-    export default {
+    import { DropDownListComponent } from "@syncfusion/ej2-vue-dropdowns";
+    
+    
+    export default{
         name: 'SearchB',
         props: {
-            SearchB: Array,
+            SearchB: Object,
+        },
+        components: {
+        "ejs-dropdownlist": DropDownListComponent
+        },
+        data () {
+        return {
+            Event: [
+                'Kabza de Small Road Trip', 
+                'Spring Fiesta', 
+                'Ultra South Africa', 
+                'Durban July', 
+                'Fill Up FNB'
+            ]
+         }
         }
     }
 </script>

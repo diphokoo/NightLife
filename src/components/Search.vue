@@ -12,7 +12,6 @@
         <div class="col-md-4">
             <h5 class="tHeader">Time</h5>
             <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='selectDate' placeholder='Select a Date' style="color: white;"></ejs-dropdownlist>
-
         </div>
     </div>
 </template>

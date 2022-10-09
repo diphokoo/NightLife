@@ -11,12 +11,8 @@
         </div>
         <div class="col-md-4">
             <h5 class="tHeader">Time</h5>
-            <select class="form-select">
-                <option selected>Any date</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='selectDate' placeholder='Select a Date' style="color: white;"></ejs-dropdownlist>
+
         </div>
     </div>
 </template>
@@ -61,6 +57,15 @@ h5.tHeader {
                 'Kong',
                 'Long street DK',
                 'Zone 6'
+            ],
+            selectDate:[
+                'Monday', 
+                'Tuesday', 
+                'Wednesday', 
+                'Thursday', 
+                'Friday', 
+                'Saturday', 
+                'Sunday'
             ]
          }
         }

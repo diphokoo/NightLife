@@ -8,22 +8,21 @@
   <div class="row">
     <!--Grid column-->
     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-      <h5 class="text-uppercase mb-4">OUR WORLD</h5>
+        <img src="./assests/Footer/nightclub.png" class="footerImg">
 
-      <ul class="list-unstyled mb-4">
-        <li>
-          <a href="#!" class="text-white">About us</a>
-        </li>
-        <li>
-          <a href="#!" class="text-white">Collections</a>
-        </li>
-        <li>
-          <a href="#!" class="text-white">Environmental philosophy</a>
-        </li>
-        <li>
-          <a href="#!" class="text-white">Artist collaborations</a>
-        </li>
-      </ul>
+        <p class="">
+            Nightclub is a lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
+        </p>
+        <div class="row">
+            <div class="col">
+                <img src="./assests/Footer/facebook.png" class="nftImg">            </div>
+            <div class="col">
+                <img src="./assests/Footer/twitter.png" class="nftImg">
+            </div>
+            <div class="col">
+                <img src="./assests/Footer/linkedin.png" class="nftImg">
+            </div>
+        </div>
     </div>
     <!--Grid column-->
 

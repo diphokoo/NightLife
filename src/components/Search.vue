@@ -2,16 +2,12 @@
     <div class="recSearchBox row">
         <div class="col-md-4">
             <h5 class="tHeader">Search Event</h5>
-            <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Event' placeholder='Select a game' style="color: white;"></ejs-dropdownlist>
+            <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Event' placeholder='Select a Event' style="color: white;"></ejs-dropdownlist>
         </div> 
         <div class="col-md-4">
             <h5 class="tHeader">Place</h5>
-            <select class="form-select">
-                <option selected>JoJo Rooftop, Johannesb...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Venue' placeholder='Select a Venue' style="color: white;"></ejs-dropdownlist>
+
         </div>
         <div class="col-md-4">
             <h5 class="tHeader">Time</h5>
@@ -58,6 +54,13 @@ h5.tHeader {
                 'Ultra South Africa', 
                 'Durban July', 
                 'Fill Up FNB'
+            ],
+            Venue: [
+                'Jojo Rooftop',
+                'Capello',
+                'Kong',
+                'Long street DK',
+                'Zone 6'
             ]
          }
         }

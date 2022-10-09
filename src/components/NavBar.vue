@@ -29,7 +29,7 @@
             navGalary: "Galary",
             navContact: "Contact",
             navLogin: "Login",
-            logo: "https://db3pap002files.storage.live.com/y4myssw1DRIDem4QyfvlnK-0I3Q4hzH0KGTlqhs75oO5KxgNUzBEze94SmSPcC7b2V_dZKP9tqKv6limPCNuCIWrItv8oNhSkvbpsc63CcWetS74212Cvx3g9oAIEWyJT7u_nRrbCdQnFYmlspjFu13QaJdr7lbRNPJ4ZnoKsRhCgqNTIUpVN3o3qoezd89DyUp?width=225&height=58&cropmode=none"
+            logo: "https://db3pap002files.storage.live.com/y4mZGbH-d-G7Es4W_SIy2a71Si9RMpALxe6uvZoXGcQ5OJ8rXhaVsFMKJeIV9vFniDeOeVmJ1kLkftFnswUnn8lr2nv1VkYPEIGImZKGsHlmqVSba7rYMvTVpdHDTTy4EhPB0STt7PTDMZ_zQxFsUG1oKglKgp5E9cWxpo90eS9CLw-S2bOk9dOyXBOoN6gXQgs?width=225&height=58&cropmode=none"
         }
     }
  }

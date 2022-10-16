@@ -10,8 +10,11 @@
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "@syncfusion/ej2-vue-dropdowns": "^20.3.48",
+    "@types/node": "^18.8.5",
+    "all-node-versions": "^11.1.0",
     "bootstrap": "^5.2.2",
     "core-js": "^3.8.3",
+    "node": "^18.8.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-property-decorator": "^10.0.0-rc.3",

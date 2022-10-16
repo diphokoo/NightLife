@@ -4,8 +4,7 @@
     <h4 class="navbar-brand" href="#">{{ title }}</h4>
 
     <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-        
+        <ul class="navbar-nav">       
             <li class="nav-item dropdown bg-light">
                 <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='weekdays' placeholder='Weekdats' style="color: white;"></ejs-dropdownlist>
             </li>
@@ -20,101 +19,7 @@
     </nav>
 
     <div class="cards row">
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster1.jpg" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">APR</span>
-                    <h5 class="date">14</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster2.jpg" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">Aug</span>
-                    <h5 class="date">20</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster3.png" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">SEP</span>
-                    <h5 class="date">18</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster4.jpg" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">APR</span>
-                    <h5 class="date">14</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster5.jpg" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">AUG</span>
-                    <h5 class="date">20</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card col-5" style="width: 18rem;">
-            <img src="./assests/poster6.jpg" class="card-img-top" alt="...">
-            <div class="card-body row">
-                <div class="col-sm-4">
-                    <span class="month">SEP</span>
-                    <h5 class="date">18</h5>
-                </div>
-                <div class="col-sm-8">
-                    <p class="cardP1">Wonder Girls 2010 Wonder <br>Girls World Tour San Francisco</p>
-                        <br>
-                        <br>
-                    <p class="cardP2">We’ll get you directly seated and <br>inside for you to enjoy the show.</p>
-                </div>
-            </div>
-        </div>
+        <Event-component v-for="Event in Events" :Event="Event" />
     </div>
 
     <a class="btn loadMore" href="#" role="button">Load More</a>
@@ -251,7 +156,6 @@ ul.navbar-nav {
 <script>
     import { DropDownListComponent } from "@syncfusion/ej2-vue-dropdowns";
 
-
     export default {
         name: 'UpcomingEvent',
         props: {
@@ -280,9 +184,62 @@ ul.navbar-nav {
                 category:[
                     'Outdoor',
                     'Indoor'
+                ],
+                Event: [
+                    {
+                        id: 1,
+                        day: 14,
+                        month: 'APR',
+                        eventName: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
+                        description: 'We’ll get you directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card1.png'
+
+                    },
+                    {
+                        id: 2,
+                        day: 20,
+                        month: 'AUG',
+                        eventName: 'JYJ 2011 JYJ Worldwide Concert Barcelona',
+                        description: 'Directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card2.png'
+                    },
+                    {
+                        id: 3,
+                        day: 18,
+                        month: 'SEP',
+                        eventName: '2011 Super Junior SM Town Live 10 World Tour New York City',
+                        description: 'Directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card3.png'
+                    },
+                    {
+                        id: 4,
+                        day: 14,
+                        month: 'APR',
+                        eventName: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
+                        description: 'We’ll get you directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card4.png'
+                    },
+                    {
+                        id: 5,
+                        day: 20,
+                        month: 'AUG',
+                        eventName: 'JYJ 2011 JYJ Worldwide Concert Barcelona',
+                        description: 'Directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card5.png'
+                    },
+                    {
+                        id: 6,
+                        day: 18,
+                        month: 'SEP',
+                        eventName: '2011 Super Junior SM Town Live 10 World Tour New York City',
+                        description: 'Directly seated and inside for you to enjoy the show.',
+                        image: './assests/Events/Card6.png'
+                    }
                 ]
             }
         }
         
     }
+
+
 </script>

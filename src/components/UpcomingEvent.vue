@@ -19,7 +19,9 @@
     </nav>
 
     <div class="cards row">
-        <Event-component v-for="Event in Events" :Event="Event" />
+        <div class="col-4">
+            1
+        </div>
     </div>
 
     <a class="btn loadMore" href="#" role="button">Load More</a>

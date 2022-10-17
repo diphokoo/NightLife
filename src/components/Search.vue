@@ -1,16 +1,16 @@
 <template>
     <div class="recSearchBox row">
         <div class="col-md-4">
-            <h5 class="tHeader">Search Event</h5>
+            <h5 class="tHeader">{{ eventTitle }}</h5>
             <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Event' placeholder='Select a Event' style="color: white;"></ejs-dropdownlist>
         </div> 
         <div class="col-md-4">
-            <h5 class="tHeader">Place</h5>
+            <h5 class="tHeader">{{ eventVenue }}</h5>
             <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='Venue' placeholder='Select a Venue' style="color: white;"></ejs-dropdownlist>
 
         </div>
         <div class="col-md-4">
-            <h5 class="tHeader">Time</h5>
+            <h5 class="tHeader">{{ eventTime }}</h5>
             <ejs-dropdownlist id='dropdownlist' class="dropDown" popupHeight="200px" popupWidth="250px" :dataSource='selectDate' placeholder='Select a Date' style="color: white;"></ejs-dropdownlist>
         </div>
     </div>
@@ -65,7 +65,11 @@ h5.tHeader {
                 'Friday', 
                 'Saturday', 
                 'Sunday'
-            ]
+            ],
+            eventTitle: 'Search Event',
+            eventVenue: 'Place',
+            eventTime: 'Time'
+
          }
         }
     }

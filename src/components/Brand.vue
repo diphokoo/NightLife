@@ -3,9 +3,7 @@
         <h3 class="brandH3">Our partners</h3>
         <div class="brandContent">
             <p>
-                We've had the pleasure of working with industry-defining brands. These
-                <br>
-                are just some of them.
+            {{ brandContent }} 
             </p>
         </div>
         <div class="BrandList">
@@ -52,6 +50,11 @@
         name: 'Brand',
         props: {
             Brand: Array,
-        }
+        },
+         data() {
+            return {
+                brandContent: 'We had the pleasure of working with industry-defining brands. These are just some of them.' 
+            }
+         }
     }
 </script>

@@ -78,6 +78,7 @@ a.nav-link {
 }
 
 .BrandList {
+  position: absolute;
   margin-top: 180px;
 }
 

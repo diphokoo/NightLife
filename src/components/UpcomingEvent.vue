@@ -175,7 +175,7 @@ ul.navbar-nav {
 }
 
 
-</style>
+</style> 
 
 <script>
     import { DropDownListComponent } from "@syncfusion/ej2-vue-dropdowns";

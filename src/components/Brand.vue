@@ -1,11 +1,9 @@
 <template>
     <div class="brand">
-        <h3 class="brandH3">Our partners</h3>
+        <h3 class="brandH3">{{ brand }}</h3>
         <div class="brandContent">
             <p>
-                We've had the pleasure of working with industry-defining brands. These
-                <br>
-                are just some of them.
+            {{ brandContent }} 
             </p>
         </div>
         <div class="BrandList">
@@ -52,6 +50,12 @@
         name: 'Brand',
         props: {
             Brand: Array,
-        }
+        },
+         data() {
+            return {
+                brand: 'Our partners',
+                brandContent: 'We had the pleasure of working with industry-defining brands. These are just some of them.' 
+            }
+         }
     }
 </script>

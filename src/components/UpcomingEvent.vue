@@ -19,9 +19,27 @@
     </nav>
 
     <div class="cards row">
-        <div class="col-4">
-            1
+        <div class="card col-3" v-for="Event in Events" :key="Events.id">
+            <img class="card-img-top" :src="Event.image_url">
+            <div class="card-body row">
+                <div class="col-sm-4">
+                    <span class="month"> {{ Event.month }} </span>
+                    <h5 class="date"> {{ Event.day }} </h5>
+                </div>
+                <div class="col-sm-8">
+                    <p class="cardP1">
+                        {{ Event.eventName }}
+                    </p>
+                    <br>
+                    <br>
+                    <p class="cardP2">
+                        {{ Event.description }}
+                    </p>
+                </div>
+            </div>
         </div>
+
+        {{ Events.id }}
     </div>
 
     <a class="btn loadMore" href="#" role="button">Load More</a>
@@ -69,14 +87,18 @@ ul.navbar-nav {
     padding-left: 530px;
 }
 
-.card.col-5 {
-    margin-left: 30px;
-    margin-bottom: 10px;
-    padding-bottom: 25px;
-}
 
 .cards.row {
-    padding-left: 140px;
+    padding-left: 60px;
+}
+
+
+
+.card.col-3 {
+    height: 310px;
+    width: 330px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .month {
@@ -187,14 +209,14 @@ ul.navbar-nav {
                     'Outdoor',
                     'Indoor'
                 ],
-                Event: [
+                Events: [
                     {
                         id: 1,
                         day: 14,
                         month: 'APR',
                         eventName: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
                         description: 'We’ll get you directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card1.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4mq2AqZ6VeI1I3VEG453BQrhVa7K-d9avrNrMUwakGdf3r_dzetGGsvWWXQAphu8PwT-eHqY2VFsfWo51e6-AdJkChmDyi0LmFfhfmK1ze2msCuKvuP50mHj_VdE1LiD1hVLro2TjYmh_kOiTBqH3zDLBp51Nzhs_aw7PQU1PS863ME8t7aAC-IKOU68mdp81y?width=344&height=198&cropmode=none"
 
                     },
                     {
@@ -203,7 +225,7 @@ ul.navbar-nav {
                         month: 'AUG',
                         eventName: 'JYJ 2011 JYJ Worldwide Concert Barcelona',
                         description: 'Directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card2.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4m6xWXy5d_qYIXZPB3TRG66nNZz92OHksOMyHF6wPMD8dfiqWpc-UCCml14GkX5ueuwWYR4Wto9VgQYEM3FIMpl1esmZzR367X2ks8zC0rNnRD-GTMJdIJC5n3UThOFHapYPlAENgfnNu9hFPYLG-DoN64wXKhkytuGT6v46jPlWnGAnfKJqE8lgdQgWTuC3HK?width=344&height=198&cropmode=none"
                     },
                     {
                         id: 3,
@@ -211,7 +233,7 @@ ul.navbar-nav {
                         month: 'SEP',
                         eventName: '2011 Super Junior SM Town Live 10 World Tour New York City',
                         description: 'Directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card3.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4mCf5fPVSIrnS__g6aWDpHNKDHMYIVxuGTQNWr5CXjcLUCV2oKxZUS2fdEIYQLktkYty6PlqG06cBAcLyXFD2BMyRAU9oZQ0KadD7C5VZ15o9FEiH-vXechr_jfVrfdrDdcDxBCDPLSEoddwmPJgoGwU0dWo40wYAmbBwL2T5wt8zDTWuWGOZziMAcM7TNK_FY?width=344&height=198&cropmode=none"
                     },
                     {
                         id: 4,
@@ -219,7 +241,7 @@ ul.navbar-nav {
                         month: 'APR',
                         eventName: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
                         description: 'We’ll get you directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card4.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4mF4XiAW8qysGE8aqdBy0JSPRWqf8n5oZOxermE7cPsuUrRnF_iWjoO8mrj2jbCDKrE-HwsAPKbfCDPXq8S6YQGSanuFlGz8VO4EDJ8cyT5qc6pmWO9ViQwnbKLpOYX3v-SSpjEVQaaeu6TQKBC50-ePYgo3Yld4_f4QU7LBeatod3-a5Gzbmm3KmE96Vc2-n3?width=344&height=198&cropmode=none"
                     },
                     {
                         id: 5,
@@ -227,7 +249,7 @@ ul.navbar-nav {
                         month: 'AUG',
                         eventName: 'JYJ 2011 JYJ Worldwide Concert Barcelona',
                         description: 'Directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card5.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4mm77y-Uxg8-YvxJ4fTQXOHjO2ErTR74WJmBpkVpAayZtqdI4Vy6V74_5UM9noOuH16TrJUsGTL3uR-pbpDDdGk25hTqPzlER55nKtIJsnG3U8BL0N5_A8DxX4a_1yoAm2dKk-JywLgpKhoxu8rgyAvTHrwpmpRiWTyaWFOET-4sOHdve3vJC-a3q5cLcXKfwu?width=344&height=198&cropmode=none"
                     },
                     {
                         id: 6,
@@ -235,7 +257,7 @@ ul.navbar-nav {
                         month: 'SEP',
                         eventName: '2011 Super Junior SM Town Live 10 World Tour New York City',
                         description: 'Directly seated and inside for you to enjoy the show.',
-                        image: './assests/Events/Card6.png'
+                        image_url: "https://db3pap002files.storage.live.com/y4mrAOtzdsErQ-cF2xF6Q74vk_kOKuu_7df-lY8yK2fn054pK2vwI9PSXJCeNF3ImlgfCWzM5Ykcks7dK0dCXKnMz6AUqWij4qwg2HZveOQqjj8wRwJIugF-cpEBBCvJjs2pAAXNKnrmC78K4jxSjv6NE9TU5G0E7VQApyZgSkbGqN3FfcVPnj1TGTQ1ub5d-88?width=344&height=198&cropmode=none"
                     }
                 ]
             }

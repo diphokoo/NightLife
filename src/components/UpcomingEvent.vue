@@ -42,7 +42,7 @@
         {{ Events.id }}
     </div>
 
-    <a class="btn loadMore" href="#" role="button">Load More</a>
+    <a class="btn loadMore" href="#" role="button">{{ eventBtn }}</a>
 </div>
 
 
@@ -259,7 +259,8 @@ ul.navbar-nav {
                         description: 'Directly seated and inside for you to enjoy the show.',
                         image_url: "https://db3pap002files.storage.live.com/y4mrAOtzdsErQ-cF2xF6Q74vk_kOKuu_7df-lY8yK2fn054pK2vwI9PSXJCeNF3ImlgfCWzM5Ykcks7dK0dCXKnMz6AUqWij4qwg2HZveOQqjj8wRwJIugF-cpEBBCvJjs2pAAXNKnrmC78K4jxSjv6NE9TU5G0E7VQApyZgSkbGqN3FfcVPnj1TGTQ1ub5d-88?width=344&height=198&cropmode=none"
                     }
-                ]
+                ],
+                eventBtn: "Load More"
             }
         }
         

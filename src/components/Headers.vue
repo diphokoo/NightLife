@@ -14,12 +14,7 @@
 </template>
 
 <style scoped>
-    img#imgHeader {
-        /* left: 24px; */
-        position: absolute;
-        margin-left: 135px;
-        margin-top: -22px;
-    }
+
 
     i.fa-solid.fa-chevron-right {
         position: absolute;

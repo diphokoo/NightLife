@@ -8,13 +8,21 @@ a.nav-link {
 
 .headerColor {
   position: absolute;
-  width: 1440px;
+  width: 100%;
   height: 720px;
-  left: 140px;
+  left: 0px;
   top: 0px;
   background: linear-gradient(118.98deg, #EDA046 -2.11%, #5822CC 63.58%);
   mix-blend-mode: multiply;
   opacity: 0.9;
+}
+
+img#imgHeader {
+  /* left: 24px; */
+  position: absolute;
+  margin-left: 300px;
+  /* margin-top: -22px; */
+  width: 63%;
 }
 
 .recSearchBox {

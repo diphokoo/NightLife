@@ -12,9 +12,9 @@ a.nav-link {
   height: 720px;
   left: 0px;
   top: 0px;
-  background: linear-gradient(118.98deg, #EDA046 -2.11%, #5822CC 63.58%);
   mix-blend-mode: multiply;
   opacity: 0.9;
+  background-image: url("/src/components/assests/Rectangle10.png");
 }
 
 img#imgHeader {

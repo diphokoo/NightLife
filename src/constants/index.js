@@ -14,16 +14,11 @@ export const SA_CITIES = [
 ];
 
 export const EVENT_CATEGORIES = [
-  { id: 'music', label: 'Music', icon: '🎵', color: '#FF4D6D' },
+  { id: 'music', label: 'Clubs', icon: '🎵', color: '#FF4D6D' },
   { id: 'nightlife', label: 'Nightlife', icon: '🌙', color: '#7C5CFF' },
-  { id: 'sports', label: 'Sports', icon: '⚽', color: '#22C55E' },
   { id: 'festivals', label: 'Festivals', icon: '🎪', color: '#F59E0B' },
   { id: 'arts', label: 'Arts & Culture', icon: '🎨', color: '#00D4FF' },
   { id: 'food', label: 'Food & Drink', icon: '🍷', color: '#FF4D6D' },
-  { id: 'comedy', label: 'Comedy', icon: '😂', color: '#F59E0B' },
-  { id: 'theatre', label: 'Theatre', icon: '🎭', color: '#7C5CFF' },
-  { id: 'family', label: 'Family', icon: '👨‍👩‍👧', color: '#22C55E' },
-  { id: 'business', label: 'Business', icon: '💼', color: '#00D4FF' },
 ];
 
 export const MUSIC_GENRES = [

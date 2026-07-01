@@ -77,7 +77,7 @@ const generateEvents = () => {
       isTrending: i % 4 === 0,
       isFree: basePrice === 0,
       isIndoor: i % 3 !== 0,
-      isFamilyFriendly: category.id === 'family' || category.id === 'arts',
+      isFamilyFriendly: category.id === 'arts',
       status: daysOffset > -5 ? 'published' : 'archived',
       organizer: {
         name: `${venue.city} Events Co.`,
@@ -98,14 +98,9 @@ function getEventTitle(i, category) {
   const titles = {
     music: ['Amapiano Nights', 'Afrobeats Festival', 'Jazz Under the Stars', 'House Music Marathon', 'Kwaito Classics'],
     nightlife: ['Neon Rave', 'Midnight Masquerade', 'Club Fusion Night', 'VIP Rooftop Party', 'Electric Sundown'],
-    sports: ['Premier Soccer League', 'Rugby Championship', 'Cricket Showdown', 'Athletics Meet', 'Boxing Night'],
     festivals: ['Cape Town Carnival', 'Joburg Arts Fest', 'Durban July', 'Oppikoppi', 'Splashy Fen'],
     arts: ['Gallery Opening Night', 'Street Art Tour', 'Photography Exhibition', 'Sculpture Garden', 'Film Premiere'],
     food: ['Wine & Dine Festival', 'Braai Masters', 'Street Food Market', 'Craft Beer Fest', 'Chef\'s Table'],
-    comedy: ['Stand-Up Spectacular', 'Comedy Jam', 'Laugh Factory', 'Open Mic Night', 'Comedy Gala'],
-    theatre: ['Shakespeare in the Park', 'Modern Drama', 'Musical Theatre', 'Improv Night', 'Ballet Gala'],
-    family: ['Kids Fun Day', 'Family Picnic', 'Science Fair', 'Puppet Show', 'Adventure Park'],
-    business: ['Tech Summit', 'Startup Pitch', 'Leadership Forum', 'Innovation Expo', 'Networking Night'],
   };
   const list = titles[category.id] || titles.music;
   return list[i % list.length];

@@ -7,6 +7,8 @@ import { useAuth } from '../contexts/AuthContext';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 
+import logo from '../assets/logo.png';
+
 const RegisterPage = () => {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
@@ -20,7 +22,12 @@ const RegisterPage = () => {
       await registerUser(data.name, data.email, data.password);
       navigate('/');
     } catch (e) {
-      setError(e.message);
+      const msg = e.code === 'auth/email-already-in-use'
+        ? 'An account with this email already exists'
+        : e.code === 'auth/weak-password'
+        ? 'Password is too weak'
+        : e.message;
+      setError(msg);
     }
   };
 
@@ -39,10 +46,8 @@ const RegisterPage = () => {
       >
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-lg">P</span>
-            </div>
-            <span className="font-display font-bold text-white text-2xl">Pulse <span className="text-[#FF4D6D]">SA</span></span>
+            <img src={logo} alt="NightIQ" className="w-10 h-10 rounded-2xl object-contain" />
+            <span className="font-display font-bold text-white text-2xl">Night<span className="text-[#FF4D6D]">IQ</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-white">Create your account</h1>
           <p className="text-[#B6BDC9] mt-1">Join thousands of event-goers across South Africa</p>

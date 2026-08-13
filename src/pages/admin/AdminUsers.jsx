@@ -1,25 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MdSearch, MdVerified, MdBlock } from 'react-icons/md';
 import AdminLayout from '../../layouts/AdminLayout';
 import Badge from '../../components/common/Badge';
+import EmptyState from '../../components/common/EmptyState';
+import { userService } from '../../services/userService';
 
-const MOCK_USERS = Array.from({ length: 20 }, (_, i) => ({
-  id: `u${i}`,
-  name: ['Thabo Nkosi', 'Lerato Dlamini', 'Sipho Mthembu', 'Ayanda Zulu', 'Nomsa Khumalo'][i % 5],
-  email: `user${i + 1}@example.com`,
-  role: i === 0 ? 'admin' : 'user',
-  joined: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-  tickets: Math.floor(Math.random() * 20),
-  status: i % 7 === 0 ? 'suspended' : 'active',
-  avatar: `https://ui-avatars.com/api/?name=User+${i + 1}&background=${['FF4D6D', '7C5CFF', '00D4FF', '22C55E'][i % 4]}&color=fff`,
-}));
+const getInitials = (name = '') =>
+  name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
 
 const AdminUsers = () => {
+  const [allUsers, setAllUsers] = useState([]);
   const [search, setSearch] = useState('');
-  const users = MOCK_USERS.filter(u =>
-    u.name.toLowerCase().includes(search.toLowerCase()) ||
-    u.email.toLowerCase().includes(search.toLowerCase())
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    userService.getAllUsers()
+      .then(setAllUsers)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const users = allUsers.filter(u =>
+    u.name?.toLowerCase().includes(search.toLowerCase()) ||
+    u.email?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -28,7 +31,7 @@ const AdminUsers = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-display font-bold text-white">User Management</h1>
-            <p className="text-[#B6BDC9] text-sm mt-1">{MOCK_USERS.length} registered users</p>
+            <p className="text-[#B6BDC9] text-sm mt-1">{allUsers.length} registered users</p>
           </div>
         </div>
 
@@ -47,49 +50,66 @@ const AdminUsers = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
-                  {['User', 'Role', 'Joined', 'Tickets', 'Status', 'Actions'].map(h => (
+                  {['User', 'Role', 'Joined', 'Status', 'Actions'].map(h => (
                     <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-[#B6BDC9] uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, i) => (
-                  <motion.tr
-                    key={user.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: i * 0.03 }}
-                    className="border-b border-white/5 hover:bg-white/3 transition-colors"
-                  >
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
-                        <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-xl" />
-                        <div>
-                          <p className="text-sm font-medium text-white">{user.name}</p>
-                          <p className="text-xs text-[#B6BDC9]">{user.email}</p>
+                {loading ? (
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <tr key={i} className="border-b border-white/5">
+                      {Array.from({ length: 5 }).map((_, j) => (
+                        <td key={j} className="px-4 py-3"><div className="h-4 bg-white/5 rounded skeleton" /></td>
+                      ))}
+                    </tr>
+                  ))
+                ) : users.length === 0 ? (
+                  <tr><td colSpan={5}><EmptyState type="users" title="No users found" /></td></tr>
+                ) : (
+                  users.map((user, i) => (
+                    <motion.tr
+                      key={user.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: i * 0.03 }}
+                      className="border-b border-white/5 hover:bg-white/3 transition-colors"
+                    >
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-xs">{getInitials(user.name)}</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-white">{user.name || '—'}</p>
+                            <p className="text-xs text-[#B6BDC9]">{user.email}</p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge color={user.role === 'admin' ? 'pink' : 'gray'} className="capitalize">{user.role}</Badge>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-[#B6BDC9]">{user.joined}</td>
-                    <td className="px-4 py-3 text-sm font-mono text-white">{user.tickets}</td>
-                    <td className="px-4 py-3">
-                      <Badge color={user.status === 'active' ? 'green' : 'danger'} className="capitalize">{user.status}</Badge>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex gap-1">
-                        <button className="p-1.5 rounded-lg text-[#B6BDC9] hover:text-[#00D4FF] hover:bg-white/10 transition-all" title="Verify">
-                          <MdVerified size={16} />
-                        </button>
-                        <button className="p-1.5 rounded-lg text-[#B6BDC9] hover:text-[#EF4444] hover:bg-white/10 transition-all" title="Suspend">
-                          <MdBlock size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Badge color={user.role === 'admin' ? 'pink' : 'gray'} className="capitalize">{user.role || 'user'}</Badge>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-[#B6BDC9]">
+                        {user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString() : '—'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Badge color={user.status === 'suspended' ? 'danger' : 'green'} className="capitalize">
+                          {user.status || 'active'}
+                        </Badge>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex gap-1">
+                          <button className="p-1.5 rounded-lg text-[#B6BDC9] hover:text-[#00D4FF] hover:bg-white/10 transition-all" title="Verify">
+                            <MdVerified size={16} />
+                          </button>
+                          <button className="p-1.5 rounded-lg text-[#B6BDC9] hover:text-[#EF4444] hover:bg-white/10 transition-all" title="Suspend">
+                            <MdBlock size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

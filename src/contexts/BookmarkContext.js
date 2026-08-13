@@ -23,6 +23,7 @@ export const BookmarkProvider = ({ children }) => {
         localStorage.setItem(LOCAL_KEY, JSON.stringify(saved));
       }
     }).catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   const persist = useCallback(async (next, uid) => {

@@ -16,6 +16,7 @@ export const InterestProvider = ({ children }) => {
       .then(setInterests)
       .catch(() => setInterests([]))
       .finally(() => setLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   const toggle = useCallback(async (eventId) => {

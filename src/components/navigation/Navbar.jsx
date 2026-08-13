@@ -3,12 +3,16 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   MdNotifications, MdPerson, MdMenu, MdClose, MdDarkMode, MdLightMode,
-  MdConfirmationNumber, MdSearch, MdKeyboardArrowDown, MdLogout, MdDashboard,
+  MdSearch, MdKeyboardArrowDown, MdLogout, MdDashboard, MdFavorite,
 } from 'react-icons/md';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 import SearchBar from '../common/SearchBar';
 import { SA_CITIES, EVENT_CATEGORIES } from '../../constants';
+import logo from '../../assets/logo.png';
+
+const getInitials = (name = '') =>
+  name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
 
 const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
@@ -29,7 +33,7 @@ const Navbar = () => {
 
   const navLinks = [
     { to: '/events', label: 'Events' },
-    { to: '/tickets', label: 'Tickets' },
+    { to: '/interests', label: 'Interests' },
   ];
 
   return (
@@ -48,11 +52,9 @@ const Navbar = () => {
           <div className="flex items-center h-16 gap-4">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 flex-shrink-0 group">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(255,77,109,0.5)] transition-shadow">
-                <span className="text-white font-bold text-sm">P</span>
-              </div>
+              <img src={logo} alt="NightIQ" className="w-8 h-8 rounded-xl object-contain" />
               <span className="font-display font-bold text-white text-lg hidden sm:block">
-                Pulse <span className="text-[#FF4D6D]">SA</span>
+                Night<span className="text-[#FF4D6D]">IQ</span>
               </span>
             </Link>
 
@@ -144,7 +146,6 @@ const Navbar = () => {
 
             {/* Right actions */}
             <div className="flex items-center gap-2 ml-auto flex-shrink-0">
-              {/* Mobile search */}
               <button
                 onClick={() => setSearchOpen(true)}
                 className="lg:hidden p-2 rounded-xl text-[#B6BDC9] hover:text-white hover:bg-white/10 transition-all"
@@ -153,7 +154,6 @@ const Navbar = () => {
                 <MdSearch size={22} />
               </button>
 
-              {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-xl text-[#B6BDC9] hover:text-white hover:bg-white/10 transition-all"
@@ -164,20 +164,20 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  {/* Notifications */}
                   <button className="relative p-2 rounded-xl text-[#B6BDC9] hover:text-white hover:bg-white/10 transition-all" aria-label="Notifications">
                     <MdNotifications size={22} />
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FF4D6D] rounded-full" />
                   </button>
 
-                  {/* Profile */}
                   <div className="relative">
                     <button
                       onClick={() => setProfileOpen(p => !p)}
                       className="flex items-center gap-2 p-1 rounded-xl hover:bg-white/10 transition-all"
                       aria-label="Profile menu"
                     >
-                      <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-xl object-cover" />
+                      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">{getInitials(user.name)}</span>
+                      </div>
                     </button>
                     <AnimatePresence>
                       {profileOpen && (
@@ -194,8 +194,8 @@ const Navbar = () => {
                           <Link to="/profile" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-[#B6BDC9] hover:text-white hover:bg-white/10 rounded-xl transition-colors">
                             <MdPerson size={16} /> Profile
                           </Link>
-                          <Link to="/tickets" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-[#B6BDC9] hover:text-white hover:bg-white/10 rounded-xl transition-colors">
-                            <MdConfirmationNumber size={16} /> My Tickets
+                          <Link to="/interests" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-[#B6BDC9] hover:text-white hover:bg-white/10 rounded-xl transition-colors">
+                            <MdFavorite size={16} /> My Interests
                           </Link>
                           {isAdmin && (
                             <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-[#FF4D6D] hover:bg-white/10 rounded-xl transition-colors">
@@ -221,7 +221,6 @@ const Navbar = () => {
                 </div>
               )}
 
-              {/* Mobile menu */}
               <button
                 onClick={() => setMobileOpen(p => !p)}
                 className="md:hidden p-2 rounded-xl text-[#B6BDC9] hover:text-white hover:bg-white/10 transition-all"
@@ -248,7 +247,7 @@ const Navbar = () => {
                   { to: '/events', label: 'Events' },
                   { to: '/cities', label: 'Cities' },
                   { to: '/categories', label: 'Categories' },
-                  { to: '/tickets', label: 'Tickets' },
+                  { to: '/interests', label: 'My Interests' },
                 ].map(link => (
                   <NavLink
                     key={link.to}

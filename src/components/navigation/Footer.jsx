@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { MdLocationOn, MdEmail, MdPhone } from 'react-icons/md';
 import { FaSpotify, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { SA_CITIES, EVENT_CATEGORIES } from '../../constants';
+import logo from '../../assets/logo.png';
 
 const Footer = () => (
   <footer className="bg-[#0F172A] border-t border-white/10 mt-20">
@@ -10,10 +11,8 @@ const Footer = () => (
         {/* Brand */}
         <div className="lg:col-span-1">
           <Link to="/" className="flex items-center gap-2 mb-4">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center">
-              <span className="text-white font-bold">P</span>
-            </div>
-            <span className="font-display font-bold text-white text-xl">Pulse <span className="text-[#FF4D6D]">SA</span></span>
+            <img src={logo} alt="NightIQ" className="w-9 h-9 rounded-xl object-contain" />
+            <span className="font-display font-bold text-white text-xl">Night<span className="text-[#FF4D6D]">IQ</span></span>
           </Link>
           <p className="text-sm text-[#B6BDC9] leading-relaxed mb-5">
             South Africa's premier event discovery platform. Find, save, and experience the best events across the country.
@@ -75,8 +74,8 @@ const Footer = () => (
             ))}
           </ul>
           <div className="space-y-2">
-            <a href="mailto:hello@pulsesa.co.za" className="flex items-center gap-2 text-sm text-[#B6BDC9] hover:text-white transition-colors">
-              <MdEmail size={16} /> hello@pulsesa.co.za
+            <a href="mailto:hello@nightiq.co.za" className="flex items-center gap-2 text-sm text-[#B6BDC9] hover:text-white transition-colors">
+              <MdEmail size={16} /> hello@nightiq.co.za
             </a>
             <a href="tel:+27110000000" className="flex items-center gap-2 text-sm text-[#B6BDC9] hover:text-white transition-colors">
               <MdPhone size={16} /> +27 11 000 0000
@@ -86,7 +85,7 @@ const Footer = () => (
       </div>
 
       <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-[#B6BDC9]">© {new Date().getFullYear()} Pulse SA. All rights reserved.</p>
+        <p className="text-sm text-[#B6BDC9]">© {new Date().getFullYear()} NightIQ. All rights reserved.</p>
         <div className="flex items-center gap-1 text-sm text-[#B6BDC9]">
           <span>Made with</span>
           <span className="text-[#FF4D6D]">♥</span>

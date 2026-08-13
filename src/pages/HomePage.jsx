@@ -91,7 +91,7 @@ const NewsletterSection = () => {
           </p>
           {submitted ? (
             <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-[#22C55E] font-semibold">
-              ✅ You're subscribed! Welcome to Pulse SA.
+              ✅ You're subscribed! Welcome to NightIQ.
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">

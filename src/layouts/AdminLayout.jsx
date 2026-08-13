@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import logo from '../assets/logo.png';
 
 const adminLinks = [
   { to: '/admin', icon: MdDashboard, label: 'Dashboard', exact: true },
@@ -31,11 +32,9 @@ const AdminLayout = ({ children }) => {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center">
-            <span className="text-white font-bold text-sm">P</span>
-          </div>
+          <img src={logo} alt="NightIQ" className="w-8 h-8 rounded-xl object-contain" />
           <div>
-            <span className="font-display font-bold text-white text-base">Pulse <span className="text-[#FF4D6D]">SA</span></span>
+            <span className="font-display font-bold text-white text-base">Night<span className="text-[#FF4D6D]">IQ</span></span>
             <p className="text-[10px] text-[#B6BDC9]">Admin Panel</p>
           </div>
         </Link>

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  MdBookmark, MdConfirmationNumber, MdHistory, MdSettings,
-  MdNotifications, MdSecurity, MdPayment, MdEdit, MdLogout, MdVerified,
+  MdBookmark, MdFavorite, MdHistory, MdSettings,
+  MdNotifications, MdSecurity, MdPayment, MdEdit, MdLogout,
 } from 'react-icons/md';
 import MainLayout from '../layouts/MainLayout';
 import EventCard from '../components/cards/EventCard';
@@ -12,12 +12,16 @@ import EmptyState from '../components/common/EmptyState';
 import Button from '../components/common/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useBookmarks } from '../contexts/BookmarkContext';
+import { useInterests } from '../contexts/InterestContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { mockEvents } from '../services/mockData';
+import { eventService } from '../services/eventService';
+
+const getInitials = (name = '') =>
+  name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
 
 const TABS = [
   { id: 'saved', label: 'Saved', icon: <MdBookmark size={16} /> },
-  { id: 'tickets', label: 'Tickets', icon: <MdConfirmationNumber size={16} /> },
+  { id: 'interests', label: 'Interests', icon: <MdFavorite size={16} /> },
   { id: 'history', label: 'History', icon: <MdHistory size={16} /> },
   { id: 'settings', label: 'Settings', icon: <MdSettings size={16} /> },
 ];
@@ -71,12 +75,23 @@ const SettingsPanel = () => {
 const ProfilePage = () => {
   const { user } = useAuth();
   const { bookmarks } = useBookmarks();
+  const { interests } = useInterests();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('saved');
+  const [savedEvents, setSavedEvents] = useState([]);
+  const [interestedEvents, setInterestedEvents] = useState([]);
+  const [loadingEvents, setLoadingEvents] = useState(false);
 
-  const savedEvents = mockEvents.filter(e => bookmarks.includes(e.id));
-  const purchasedTickets = mockEvents.slice(0, 3); // mock purchased
-  const attendanceHistory = mockEvents.slice(3, 6); // mock history
+  useEffect(() => {
+    if (!user) return;
+    setLoadingEvents(true);
+    const ids = [...new Set([...bookmarks, ...interests])];
+    if (!ids.length) { setLoadingEvents(false); return; }
+    eventService.getByIds(ids).then(events => {
+      setSavedEvents(events.filter(e => bookmarks.includes(e.id)));
+      setInterestedEvents(events.filter(e => interests.includes(e.id)));
+    }).finally(() => setLoadingEvents(false));
+  }, [user, bookmarks, interests]);
 
   if (!user) {
     return (
@@ -84,7 +99,7 @@ const ProfilePage = () => {
         <div className="content-max px-4 sm:px-6 lg:px-8 mx-auto py-20 text-center">
           <div className="text-5xl mb-4">🔐</div>
           <h2 className="text-2xl font-bold text-white mb-3">Sign in to view your profile</h2>
-          <p className="text-[#B6BDC9] mb-6">Access your saved events, tickets, and settings.</p>
+          <p className="text-[#B6BDC9] mb-6">Access your saved events, interests, and settings.</p>
           <div className="flex gap-3 justify-center">
             <Link to="/login"><Button variant="primary">Sign In</Button></Link>
             <Link to="/register"><Button variant="secondary">Create Account</Button></Link>
@@ -95,41 +110,32 @@ const ProfilePage = () => {
   }
 
   const tabContent = {
-    saved: savedEvents.length === 0
-      ? <EmptyState type="events" title="No saved events" message="Bookmark events to save them here." action={() => navigate('/events')} actionLabel="Browse Events" />
-      : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">{savedEvents.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}</div>,
+    saved: loadingEvents ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[1,2,3].map(i => <div key={i} className="h-64 bg-white/5 rounded-2xl skeleton" />)}
+      </div>
+    ) : savedEvents.length === 0 ? (
+      <EmptyState type="events" title="No saved events" message="Bookmark events to save them here." action={() => navigate('/events')} actionLabel="Browse Events" />
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {savedEvents.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
+      </div>
+    ),
 
-    tickets: (
-      <div className="space-y-4">
-        {purchasedTickets.map(event => (
-          <div key={event.id} className="flex gap-4 p-4 bg-white/5 border border-white/10 rounded-2xl">
-            <img src={event.image} alt={event.title} className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-white truncate">{event.title}</h3>
-              <p className="text-sm text-[#B6BDC9]">{event.venue} · {event.city}</p>
-              <div className="flex items-center gap-3 mt-2">
-                <span className="px-2.5 py-1 bg-[#22C55E]/20 text-[#22C55E] text-xs rounded-full border border-[#22C55E]/30">✓ Confirmed</span>
-                <span className="text-xs text-[#B6BDC9] font-mono">QR: #{event.id.slice(-6).toUpperCase()}</span>
-              </div>
-            </div>
-          </div>
-        ))}
+    interests: loadingEvents ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[1,2,3].map(i => <div key={i} className="h-64 bg-white/5 rounded-2xl skeleton" />)}
+      </div>
+    ) : interestedEvents.length === 0 ? (
+      <EmptyState type="events" title="No interested events" message="Mark events you're interested in attending." action={() => navigate('/events')} actionLabel="Browse Events" />
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {interestedEvents.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
       </div>
     ),
 
     history: (
-      <div className="space-y-4">
-        {attendanceHistory.map(event => (
-          <div key={event.id} className="flex gap-4 p-4 bg-white/5 border border-white/10 rounded-2xl opacity-75">
-            <img src={event.image} alt={event.title} className="w-20 h-20 rounded-xl object-cover flex-shrink-0 grayscale" />
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-white truncate">{event.title}</h3>
-              <p className="text-sm text-[#B6BDC9]">{event.venue} · {event.city}</p>
-              <span className="text-xs text-[#B6BDC9] mt-1 block">Attended · Past event</span>
-            </div>
-          </div>
-        ))}
-      </div>
+      <EmptyState type="events" title="No attendance history" message="Events you attend will appear here." action={() => navigate('/events')} actionLabel="Browse Events" />
     ),
 
     settings: <SettingsPanel />,
@@ -146,13 +152,8 @@ const ProfilePage = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D6D]/5 to-[#7C5CFF]/5" />
           <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div className="relative">
-              <img src={user.avatar} alt={user.name} className="w-20 h-20 rounded-2xl border-2 border-white/20" />
-              {user.role === 'admin' && (
-                <span className="absolute -top-1 -right-1 w-6 h-6 bg-[#FF4D6D] rounded-full flex items-center justify-center">
-                  <MdVerified size={14} className="text-white" />
-                </span>
-              )}
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center border-2 border-white/20 flex-shrink-0">
+              <span className="text-white font-bold text-2xl">{getInitials(user.name)}</span>
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
@@ -162,8 +163,7 @@ const ProfilePage = () => {
               <p className="text-[#B6BDC9]">{user.email}</p>
               <div className="flex items-center gap-4 mt-3 text-sm text-[#B6BDC9]">
                 <span><strong className="text-white font-mono">{bookmarks.length}</strong> saved</span>
-                <span><strong className="text-white font-mono">3</strong> tickets</span>
-                <span><strong className="text-white font-mono">6</strong> attended</span>
+                <span><strong className="text-white font-mono">{interests.length}</strong> interested</span>
               </div>
             </div>
             <Button variant="secondary" size="sm" icon={<MdEdit size={16} />}>Edit Profile</Button>
@@ -173,13 +173,15 @@ const ProfilePage = () => {
         {/* Tabs */}
         <div className="mb-6 overflow-x-auto no-scrollbar">
           <Tabs
-            tabs={TABS.map(t => ({ ...t, count: t.id === 'saved' ? bookmarks.length : undefined }))}
+            tabs={TABS.map(t => ({
+              ...t,
+              count: t.id === 'saved' ? bookmarks.length : t.id === 'interests' ? interests.length : undefined,
+            }))}
             activeTab={activeTab}
             onChange={setActiveTab}
           />
         </div>
 
-        {/* Tab content */}
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 10 }}

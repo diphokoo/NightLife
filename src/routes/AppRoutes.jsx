@@ -8,7 +8,7 @@ const EventDetailPage = lazy(() => import('../pages/EventDetailPage'));
 const SearchPage = lazy(() => import('../pages/SearchPage'));
 const CitiesPage = lazy(() => import('../pages/CitiesPage'));
 const CategoriesPage = lazy(() => import('../pages/CategoriesPage'));
-const TicketsPage = lazy(() => import('../pages/TicketsPage'));
+const InterestsPage = lazy(() => import('../pages/InterestsPage'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage'));
@@ -47,7 +47,7 @@ const AppRoutes = () => (
       <Route path="/search" element={<SearchPage />} />
       <Route path="/cities" element={<CitiesPage />} />
       <Route path="/categories" element={<CategoriesPage />} />
-      <Route path="/tickets" element={<TicketsPage />} />
+      <Route path="/interests" element={<InterestsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

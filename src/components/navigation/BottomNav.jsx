@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { MdHome, MdSearch, MdEvent, MdBookmark, MdPerson } from 'react-icons/md';
+import { MdHome, MdSearch, MdEvent, MdFavorite, MdPerson } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
 const tabs = [
   { to: '/', icon: MdHome, label: 'Home' },
   { to: '/search', icon: MdSearch, label: 'Search' },
   { to: '/events', icon: MdEvent, label: 'Events' },
-  { to: '/profile?tab=saved', icon: MdBookmark, label: 'Saved' },
+  { to: '/interests', icon: MdFavorite, label: 'Interests' },
   { to: '/profile', icon: MdPerson, label: 'Profile' },
 ];
 

@@ -7,6 +7,8 @@ import { useAuth } from '../contexts/AuthContext';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 
+import logo from '../assets/logo.png';
+
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -17,10 +19,17 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     setError('');
     try {
-      const user = await login(data.email, data.password);
-      navigate(user.role === 'admin' ? '/admin' : '/');
+      const profile = await login(data.email, data.password);
+      navigate(profile.role === 'admin' ? '/admin' : '/');
     } catch (e) {
-      setError(e.message);
+      const msg = e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password'
+        ? 'Invalid email or password'
+        : e.code === 'auth/user-not-found'
+        ? 'No account found with this email'
+        : e.code === 'auth/too-many-requests'
+        ? 'Too many attempts. Please try again later'
+        : e.message;
+      setError(msg);
     }
   };
 
@@ -41,23 +50,14 @@ const LoginPage = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FF4D6D] to-[#7C5CFF] flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-lg">P</span>
-            </div>
-            <span className="font-display font-bold text-white text-2xl">Pulse <span className="text-[#FF4D6D]">SA</span></span>
+            <img src={logo} alt="NightIQ" className="w-10 h-10 rounded-2xl object-contain" />
+            <span className="font-display font-bold text-white text-2xl">Night<span className="text-[#FF4D6D]">IQ</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-white">Welcome back</h1>
           <p className="text-[#B6BDC9] mt-1">Sign in to your account</p>
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
-          {/* Demo credentials hint */}
-          <div className="mb-6 p-3 bg-[#7C5CFF]/15 border border-[#7C5CFF]/30 rounded-xl text-xs text-[#B6BDC9]">
-            <p className="font-semibold text-[#7C5CFF] mb-1">Demo Credentials</p>
-            <p>Admin: admin@pulsesa.co.za / admin123</p>
-            <p>User: user@pulsesa.co.za / user123</p>
-          </div>
-
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <Input
               label="Email address"

@@ -1,23 +1,46 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { useAuth } from './AuthContext';
 
 const BookmarkContext = createContext();
 
+const LOCAL_KEY = 'pulse-bookmarks';
+
 export const BookmarkProvider = ({ children }) => {
+  const { user } = useAuth();
   const [bookmarks, setBookmarks] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('pulse-bookmarks') || '[]');
-    } catch { return []; }
+    try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]'); } catch { return []; }
   });
+
+  // Load bookmarks from Firestore when user logs in
+  useEffect(() => {
+    if (!user) return;
+    getDoc(doc(db, 'users', user.id)).then(snap => {
+      if (snap.exists()) {
+        const saved = snap.data().bookmarks || [];
+        setBookmarks(saved);
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(saved));
+      }
+    }).catch(() => {});
+  }, [user?.id]);
+
+  const persist = useCallback(async (next, uid) => {
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(next));
+    if (uid) {
+      await setDoc(doc(db, 'users', uid), { bookmarks: next }, { merge: true }).catch(() => {});
+    }
+  }, []);
 
   const toggle = useCallback((eventId) => {
     setBookmarks(prev => {
       const next = prev.includes(eventId)
         ? prev.filter(id => id !== eventId)
         : [...prev, eventId];
-      localStorage.setItem('pulse-bookmarks', JSON.stringify(next));
+      persist(next, user?.id);
       return next;
     });
-  }, []);
+  }, [user?.id, persist]);
 
   const isBookmarked = useCallback((eventId) => bookmarks.includes(eventId), [bookmarks]);
 

@@ -1,5 +1,5 @@
 import {
-  doc, setDoc, deleteDoc, getDoc, collection, query, where, getDocs, serverTimestamp,
+  doc, setDoc, deleteDoc, getDoc, collection, query, where, getDocs, serverTimestamp, writeBatch,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
@@ -32,6 +32,17 @@ export const interestService = {
   async getEventInterestCount(eventId) {
     const q = query(collection(db, 'interests'), where('eventId', '==', eventId));
     const snap = await getDocs(q);
+    return snap.size;
+  },
+
+  // Delete all interests for a passed event
+  async clearEventInterests(eventId) {
+    const q = query(collection(db, 'interests'), where('eventId', '==', eventId));
+    const snap = await getDocs(q);
+    if (snap.empty) return 0;
+    const batch = writeBatch(db);
+    snap.docs.forEach(d => batch.delete(d.ref));
+    await batch.commit();
     return snap.size;
   },
 };

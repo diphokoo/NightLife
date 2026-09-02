@@ -15,7 +15,8 @@ import Button from '../components/common/Button';
 import { useBookmarks } from '../contexts/BookmarkContext';
 import { useInterests } from '../contexts/InterestContext';
 import { useAuth } from '../contexts/AuthContext';
-import { eventService } from '../services/eventService';
+import { eventService, isEventPassed } from '../services/eventService';
+import { interestService } from '../services/interestService';
 import { formatDate, formatCurrency, formatNumber, getOccupancyColor } from '../utils';
 
 const EventDetailPage = () => {
@@ -25,6 +26,7 @@ const EventDetailPage = () => {
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeImg, setActiveImg] = useState(0);
+  const [interestCount, setInterestCount] = useState(0);
   const { toggle, isBookmarked } = useBookmarks();
   const { toggle: toggleInterest, isInterested } = useInterests();
 
@@ -33,8 +35,12 @@ const EventDetailPage = () => {
     eventService.getById(id).then(async (e) => {
       setEvent(e);
       if (e) {
-        const rel = await eventService.getRelated(e);
+        const [rel, count] = await Promise.all([
+          eventService.getRelated(e),
+          interestService.getEventInterestCount(id),
+        ]);
         setRelated(rel);
+        setInterestCount(count);
       }
     }).finally(() => setLoading(false));
     window.scrollTo(0, 0);
@@ -59,7 +65,13 @@ const EventDetailPage = () => {
 
   const saved = isBookmarked(event.id);
   const interested = isInterested(event.id);
+  const passed = isEventPassed(event);
   const occupancyColor = getOccupancyColor(event.occupancyRate);
+
+  const handleInterestToggle = async () => {
+    const nowInterested = await toggleInterest(event.id);
+    setInterestCount(prev => nowInterested ? prev + 1 : Math.max(0, prev - 1));
+  };
 
   return (
     <MainLayout>
@@ -285,16 +297,25 @@ const EventDetailPage = () => {
                   )}
                 </div>
 
-                {user ? (
+                <div className="flex items-center justify-center gap-1.5 mb-4 text-sm text-[#B6BDC9]">
+                  <MdFavorite size={15} className="text-[#FF4D6D]" />
+                  <span><span className="font-semibold text-white">{interestCount}</span> {interestCount === 1 ? 'person' : 'people'} interested</span>
+                </div>
+
+                {user && !passed ? (
                   <Button
                     variant={interested ? 'secondary' : 'primary'}
                     fullWidth
                     size="lg"
-                    onClick={() => toggleInterest(event.id)}
+                    onClick={handleInterestToggle}
                     icon={interested ? <MdFavorite size={18} className="text-[#FF4D6D]" /> : <MdFavoriteBorder size={18} />}
                   >
                     {interested ? "I'm Interested" : 'Mark as Interested'}
                   </Button>
+                ) : passed ? (
+                  <div className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-center text-sm text-[#B6BDC9]">
+                    This event has passed
+                  </div>
                 ) : (
                   <Link to="/login">
                     <Button variant="primary" fullWidth size="lg" icon={<MdFavoriteBorder size={18} />}>

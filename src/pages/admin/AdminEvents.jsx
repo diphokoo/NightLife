@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import {
   MdAdd, MdEdit, MdDelete, MdMoreVert, MdSearch, MdStar,
-  MdArchive, MdFileCopy, MdUpload, MdImage, MdAccessTime,
+  MdArchive, MdFileCopy, MdUpload, MdImage, MdAccessTime, MdFavorite,
 } from 'react-icons/md';
 import AdminLayout from '../../layouts/AdminLayout';
 import Modal from '../../components/common/Modal';
@@ -14,6 +14,7 @@ import Pagination from '../../components/common/Pagination';
 import EmptyState from '../../components/common/EmptyState';
 import { eventService, isEventPassed } from '../../services/eventService';
 import { imageService } from '../../services/imageService';
+import { interestService } from '../../services/interestService';
 import { formatDate, formatCurrency } from '../../utils';
 import { SA_CITIES, EVENT_CATEGORIES } from '../../constants';
 
@@ -197,6 +198,7 @@ const AdminEvents = () => {
   const [editEvent, setEditEvent] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [actionMenu, setActionMenu] = useState(null);
+  const [interestCounts, setInterestCounts] = useState({});
 
   const fetchEvents = useCallback(async () => {
     setLoading(true);
@@ -205,6 +207,12 @@ const AdminEvents = () => {
       setEvents(res.events);
       setTotal(res.total);
       setTotalPages(res.totalPages);
+      // Fetch interest counts for all loaded events
+      const counts = {};
+      await Promise.all(res.events.map(async e => {
+        counts[e.id] = await interestService.getEventInterestCount(e.id);
+      }));
+      setInterestCounts(counts);
     } finally {
       setLoading(false);
     }
@@ -222,9 +230,18 @@ const AdminEvents = () => {
     if (!deleteId) return;
     const ev = events.find(e => e.id === deleteId);
     if (ev?.image) await imageService.deleteEventImage(ev.image).catch(() => {});
-    await eventService.delete(deleteId);
+    await Promise.all([
+      eventService.delete(deleteId),
+      interestService.clearEventInterests(deleteId),
+    ]);
     setDeleteId(null);
     fetchEvents();
+  };
+
+  const handleClearInterests = async (eventId) => {
+    await interestService.clearEventInterests(eventId);
+    setInterestCounts(prev => ({ ...prev, [eventId]: 0 }));
+    setActionMenu(null);
   };
 
   const openEdit = (event) => { setEditEvent(event); setModalOpen(true); setActionMenu(null); };
@@ -276,7 +293,7 @@ const AdminEvents = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
-                  {['Event', 'Date', 'City', 'Price', 'Status', 'Actions'].map(h => (
+                  {['Event', 'Date', 'City', 'Price', 'Interested', 'Status', 'Actions'].map(h => (
                     <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-[#B6BDC9] uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -322,6 +339,12 @@ const AdminEvents = () => {
                         <td className="px-4 py-3 text-sm text-[#B6BDC9]">{event.city}</td>
                         <td className="px-4 py-3 text-sm font-mono text-[#FF4D6D]">{formatCurrency(event.price)}</td>
                         <td className="px-4 py-3">
+                          <div className="flex items-center gap-1.5 text-sm text-[#B6BDC9]">
+                            <MdFavorite size={14} className="text-[#FF4D6D]" />
+                            {interestCounts[event.id] ?? '—'}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
                           <Badge color={statusBadgeColor[displayStatus] || 'gray'} className="capitalize">
                             {displayStatus}
                           </Badge>
@@ -346,6 +369,7 @@ const AdminEvents = () => {
                                     { icon: MdEdit, label: 'Edit', action: () => openEdit(event) },
                                     !passed && { icon: MdStar, label: 'Feature', action: () => { eventService.update(event.id, { isFeatured: !event.isFeatured }); fetchEvents(); setActionMenu(null); } },
                                     !passed && { icon: MdFileCopy, label: 'Duplicate', action: () => { eventService.create({ ...event, title: `${event.title} (Copy)`, id: undefined, image: event.image }); fetchEvents(); setActionMenu(null); } },
+                                    passed && (interestCounts[event.id] > 0) && { icon: MdFavorite, label: 'Clear Interests', action: () => handleClearInterests(event.id) },
                                     { icon: MdArchive, label: 'Archive', action: () => { eventService.update(event.id, { status: 'archived' }); fetchEvents(); setActionMenu(null); } },
                                     { icon: MdDelete, label: 'Delete', action: () => { setDeleteId(event.id); setActionMenu(null); }, danger: true },
                                   ].filter(Boolean).map(({ icon: Icon, label, action, danger }) => (

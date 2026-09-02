@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MdFavorite, MdFavoriteBorder, MdLocationOn, MdCalendarToday } from 'react-icons/md';
 import MainLayout from '../layouts/MainLayout';
@@ -13,6 +13,7 @@ import { formatDate } from '../utils';
 const InterestsPage = () => {
   const { user } = useAuth();
   const { interests, toggle } = useInterests();
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,7 +55,7 @@ const InterestsPage = () => {
             type="events"
             title="No interested events yet"
             message="Browse events and tap the heart icon to mark ones you're interested in."
-            action={() => window.location.href = '/events'}
+            action={() => navigate('/events')}
             actionLabel="Browse Events"
           />
         ) : (

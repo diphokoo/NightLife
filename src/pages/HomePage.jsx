@@ -150,7 +150,7 @@ const HomePage = () => {
         {/* Categories */}
         <section className="py-8">
           <SectionHeader title="Browse by Category" subtitle="Find events that match your vibe" link="/categories" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-1 gap-3">
             {EVENT_CATEGORIES.map(cat => (
               <CategoryCard key={cat.id} category={cat} />
             ))}

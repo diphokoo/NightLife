@@ -38,6 +38,18 @@ const applyClientFilters = (events, filters) => {
 const snapToDocs = (snapshot) =>
   snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 
+export const isEventPassed = (event) => {
+  if (!event?.date) return false;
+  const eventDate = new Date(event.date);
+  if (event.endTime) {
+    const [h, m] = event.endTime.split(':').map(Number);
+    eventDate.setHours(h, m, 0, 0);
+  } else {
+    eventDate.setHours(23, 59, 59, 999);
+  }
+  return eventDate < new Date();
+};
+
 export const eventService = {
   async getAll(filters = {}) {
     const snapshot = await getDocs(collection(db, EVENTS));
@@ -60,12 +72,12 @@ export const eventService = {
 
   async getFeatured() {
     const q = query(collection(db, EVENTS), where('isFeatured', '==', true), limit(6));
-    return snapToDocs(await getDocs(q));
+    return snapToDocs(await getDocs(q)).filter(e => !isEventPassed(e));
   },
 
   async getTrending() {
     const q = query(collection(db, EVENTS), where('isTrending', '==', true), limit(8));
-    return snapToDocs(await getDocs(q));
+    return snapToDocs(await getDocs(q)).filter(e => !isEventPassed(e));
   },
 
   async getUpcoming() {

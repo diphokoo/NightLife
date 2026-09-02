@@ -9,8 +9,8 @@ import EmptyState from '../components/common/EmptyState';
 import Pagination from '../components/common/Pagination';
 import SearchBar from '../components/common/SearchBar';
 import Drawer from '../components/common/Drawer';
-import { eventService } from '../services/eventService';
-import { SA_CITIES, EVENT_CATEGORIES } from '../constants';
+import { eventService, analyticsService } from '../services/eventService';
+import { EVENT_CATEGORIES } from '../constants';
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
@@ -26,7 +26,7 @@ const FilterChip = ({ label, onRemove }) => (
   </span>
 );
 
-const FilterPanel = ({ filters, onChange, onClear }) => {
+const FilterPanel = ({ filters, onChange, onClear, cities }) => {
   // eslint-disable-next-line no-unused-vars
   const [priceRange] = useState([filters.minPrice || 0, filters.maxPrice || 5000]);
 
@@ -36,7 +36,7 @@ const FilterPanel = ({ filters, onChange, onClear }) => {
       <div>
         <h4 className="text-sm font-semibold text-white mb-3">City</h4>
         <div className="space-y-2 max-h-48 overflow-y-auto">
-          {SA_CITIES.map(city => (
+          {cities.map(city => (
             <label key={city} className="flex items-center gap-2.5 cursor-pointer group">
               <input
                 type="radio"
@@ -142,6 +142,11 @@ const EventsPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [gridView, setGridView] = useState(true);
   const [page, setPage] = useState(1);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    analyticsService.getCities().then(setCities);
+  }, []);
 
   const [filters, setFilters] = useState({
     city: searchParams.get('city') || '',
@@ -285,7 +290,7 @@ const EventsPage = () => {
 
       {/* Filter drawer */}
       <Drawer isOpen={filterOpen} onClose={() => setFilterOpen(false)} title="Filter Events" width="w-80">
-        <FilterPanel filters={filters} onChange={updateFilter} onClear={() => { clearFilters(); setFilterOpen(false); }} />
+        <FilterPanel filters={filters} onChange={updateFilter} onClear={() => { clearFilters(); setFilterOpen(false); }} cities={cities} />
       </Drawer>
     </MainLayout>
   );

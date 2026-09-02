@@ -6,8 +6,8 @@ import MainLayout from '../layouts/MainLayout';
 import FeaturedCarousel from '../components/cards/FeaturedCarousel';
 import EventCard from '../components/cards/EventCard';
 import { SkeletonCard } from '../components/common/Skeleton';
-import { eventService } from '../services/eventService';
-import { EVENT_CATEGORIES, SA_CITIES, ANIMATION_VARIANTS } from '../constants';
+import { eventService, analyticsService } from '../services/eventService';
+import { EVENT_CATEGORIES, ANIMATION_VARIANTS } from '../constants';
 
 const SectionHeader = ({ title, subtitle, link, linkLabel = 'View all' }) => (
   <div className="flex items-end justify-between mb-6">
@@ -119,6 +119,7 @@ const HomePage = () => {
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [latest, setLatest] = useState([]);
+  const [popularCities, setPopularCities] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -127,11 +128,13 @@ const HomePage = () => {
       eventService.getTrending(),
       eventService.getUpcoming(),
       eventService.getAll({ limit: 8 }),
-    ]).then(([feat, trend, up, lat]) => {
+      analyticsService.getCityStats(),
+    ]).then(([feat, trend, up, lat, cities]) => {
       setFeatured(feat);
       setTrending(trend);
       setUpcoming(up);
       setLatest(lat.events);
+      setPopularCities(cities.slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -206,7 +209,7 @@ const HomePage = () => {
         <section className="py-8">
           <SectionHeader title="🌍 Popular Cities" subtitle="Events happening across South Africa" link="/cities" />
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {SA_CITIES.slice(0, 6).map((city, i) => (
+            {popularCities.map(({ city }, i) => (
               <CityCard key={city} city={city} index={i} />
             ))}
           </div>

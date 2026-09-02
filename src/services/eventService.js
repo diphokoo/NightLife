@@ -161,4 +161,17 @@ export const analyticsService = {
     });
     return Object.values(cityMap);
   },
+
+  // Returns cities sorted by event count desc (for popular cities)
+  async getCityStats() {
+    const data = await this.getCityData();
+    return data.sort((a, b) => b.events - a.events);
+  },
+
+  // Returns unique city names sorted A-Z (single source of truth for dropdowns)
+  async getCities() {
+    const snap = await getDocs(collection(db, EVENTS));
+    const cities = [...new Set(snapToDocs(snap).map(e => e.city).filter(Boolean))];
+    return cities.sort((a, b) => a.localeCompare(b));
+  },
 };

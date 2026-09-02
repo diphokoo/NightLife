@@ -12,11 +12,11 @@ import Input from '../../components/common/Input';
 import Badge from '../../components/common/Badge';
 import Pagination from '../../components/common/Pagination';
 import EmptyState from '../../components/common/EmptyState';
-import { eventService, isEventPassed } from '../../services/eventService';
+import { eventService, isEventPassed, analyticsService } from '../../services/eventService';
 import { imageService } from '../../services/imageService';
 import { interestService } from '../../services/interestService';
 import { formatDate, formatCurrency } from '../../utils';
-import { SA_CITIES, EVENT_CATEGORIES } from '../../constants';
+import { EVENT_CATEGORIES } from '../../constants';
 
 const statusBadgeColor = {
   published: 'green',
@@ -74,7 +74,7 @@ const ImageUploader = ({ currentImage, onImageSelected, uploading }) => {
   );
 };
 
-const EventFormModal = ({ isOpen, onClose, event, onSave }) => {
+const EventFormModal = ({ isOpen, onClose, event, onSave, cities }) => {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({
     defaultValues: event || { status: 'published', price: 0, currency: 'ZAR' },
   });
@@ -122,7 +122,7 @@ const EventFormModal = ({ isOpen, onClose, event, onSave }) => {
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-[#B6BDC9]">City</label>
             <select {...register('city', { required: true })} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#FF4D6D]">
-              {SA_CITIES.map(c => <option key={c} value={c} className="bg-[#121826]">{c}</option>)}
+              {cities.map(c => <option key={c} value={c} className="bg-[#121826]">{c}</option>)}
             </select>
           </div>
           <div className="flex flex-col gap-1.5">
@@ -199,6 +199,11 @@ const AdminEvents = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [actionMenu, setActionMenu] = useState(null);
   const [interestCounts, setInterestCounts] = useState({});
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    analyticsService.getCities().then(setCities);
+  }, []);
 
   const fetchEvents = useCallback(async () => {
     setLoading(true);
@@ -399,6 +404,7 @@ const AdminEvents = () => {
         onClose={() => setModalOpen(false)}
         event={editEvent}
         onSave={handleSave}
+        cities={cities}
       />
 
       <Modal isOpen={!!deleteId} onClose={() => setDeleteId(null)} title="Delete Event" size="sm">

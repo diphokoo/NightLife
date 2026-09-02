@@ -8,9 +8,9 @@ export const COLORS = {
 };
 
 export const SA_CITIES = [
-  'Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth',
-  'Bloemfontein', 'East London', 'Polokwane', 'Nelspruit', 'Kimberley',
-  'Rustenburg', 'Pietermaritzburg', 'Stellenbosch', 'George', 'Knysna',
+  'Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Soweto',
+  'Port Elizabeth', 'Bloemfontein', 'East London', 'Polokwane', 'Nelspruit',
+  'Kimberley', 'Rustenburg', 'Pietermaritzburg', 'Stellenbosch', 'George', 'Knysna',
 ];
 
 export const EVENT_CATEGORIES = [

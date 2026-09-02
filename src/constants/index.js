@@ -8,7 +8,7 @@ export const COLORS = {
 };
 
 export const SA_CITIES = [
-  'Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Soweto',
+  'Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Soweto', 'Vrede',
   'Port Elizabeth', 'Bloemfontein', 'East London', 'Polokwane', 'Nelspruit',
   'Kimberley', 'Rustenburg', 'Pietermaritzburg', 'Stellenbosch', 'George', 'Knysna',
 ];

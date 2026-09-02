@@ -16,7 +16,7 @@ import { eventService, isEventPassed, analyticsService } from '../../services/ev
 import { imageService } from '../../services/imageService';
 import { interestService } from '../../services/interestService';
 import { formatDate, formatCurrency } from '../../utils';
-import { EVENT_CATEGORIES } from '../../constants';
+import { EVENT_CATEGORIES, SA_CITIES } from '../../constants';
 
 const statusBadgeColor = {
   published: 'green',
@@ -202,7 +202,10 @@ const AdminEvents = () => {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    analyticsService.getCities().then(setCities);
+    analyticsService.getCities().then(firestoreCities => {
+      const merged = [...new Set([...SA_CITIES, ...firestoreCities])].sort((a, b) => a.localeCompare(b));
+      setCities(merged);
+    });
   }, []);
 
   const fetchEvents = useCallback(async () => {

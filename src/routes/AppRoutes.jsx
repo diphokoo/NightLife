@@ -18,6 +18,7 @@ const AdminAnalytics = lazy(() => import('../pages/admin/AdminAnalytics'));
 const AdminVenues = lazy(() => import('../pages/admin/AdminVenues'));
 const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
 const AdminTickets = lazy(() => import('../pages/admin/AdminTickets'));
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 const PageLoader = () => (
   <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center">
@@ -57,7 +58,7 @@ const AppRoutes = () => (
       <Route path="/admin/venues" element={<AdminRoute><AdminVenues /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
       <Route path="/admin/tickets" element={<AdminRoute><AdminTickets /></AdminRoute>} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </Suspense>
 );

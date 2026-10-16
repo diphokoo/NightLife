@@ -10,7 +10,7 @@ import Pagination from '../components/common/Pagination';
 import SearchBar from '../components/common/SearchBar';
 import Drawer from '../components/common/Drawer';
 import { eventService, analyticsService } from '../services/eventService';
-import { EVENT_CATEGORIES } from '../constants';
+import { SA_CITIES, EVENT_CATEGORIES } from '../constants';
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
@@ -145,7 +145,10 @@ const EventsPage = () => {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    analyticsService.getCities().then(setCities);
+    analyticsService.getCities().then(firestoreCities => {
+      const merged = [...new Set([...SA_CITIES, ...firestoreCities])].sort((a, b) => a.localeCompare(b));
+      setCities(merged);
+    });
   }, []);
 
   const [filters, setFilters] = useState({

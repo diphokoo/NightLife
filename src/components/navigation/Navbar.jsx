@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 import SearchBar from '../common/SearchBar';
 import { SA_CITIES, EVENT_CATEGORIES } from '../../constants';
+import { analyticsService } from '../../services/eventService';
 import logo from '../../assets/logo.png';
 
 const getInitials = (name = '') =>
@@ -24,6 +25,14 @@ const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [citiesOpen, setCitiesOpen] = useState(false);
   const [catsOpen, setCatsOpen] = useState(false);
+  const [navCities, setNavCities] = useState(SA_CITIES.slice(0, 8));
+
+  useEffect(() => {
+    analyticsService.getCities().then(firestoreCities => {
+      const merged = [...new Set([...SA_CITIES, ...firestoreCities])].sort((a, b) => a.localeCompare(b));
+      setNavCities(merged.slice(0, 8));
+    });
+  }, []);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -84,7 +93,7 @@ const Navbar = () => {
                       onMouseLeave={() => setCitiesOpen(false)}
                       className="absolute top-full left-0 mt-1 w-48 bg-[#121826] border border-white/10 rounded-2xl shadow-2xl overflow-hidden p-2"
                     >
-                      {SA_CITIES.slice(0, 8).map(city => (
+                      {navCities.map(city => (
                         <button
                           key={city}
                           onClick={() => { navigate(`/events?city=${city}`); setCitiesOpen(false); }}

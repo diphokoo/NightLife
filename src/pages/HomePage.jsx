@@ -116,6 +116,8 @@ const NewsletterSection = () => {
 
 const HomePage = () => {
   const [featured, setFeatured] = useState([]);
+
+  
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [latest, setLatest] = useState([]);

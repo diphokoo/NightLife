@@ -1,0 +1,111 @@
+[debug] [2026-10-19T16:52:19.860Z] ----------------------------------------------------------------------
+[debug] [2026-10-19T16:52:19.871Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tshepo\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore:rules
+[debug] [2026-10-19T16:52:19.871Z] CLI Version:   15.28.2
+[debug] [2026-10-19T16:52:19.871Z] Platform:      win32
+[debug] [2026-10-19T16:52:19.872Z] Node Version:  v24.15.0
+[debug] [2026-10-19T16:52:19.872Z] Detected Agent: unknown
+[debug] [2026-10-19T16:52:19.872Z] Time:          Mon Oct 19 2026 18:52:19 GMT+0200 (South Africa Standard Time)
+[debug] [2026-10-19T16:52:19.873Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-19T16:52:42.981Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-19T16:52:42.981Z] > authorizing via signed-in user (diphokoobe@gmail.com)
+[debug] [2026-10-19T16:52:42.982Z] [iam] checking project sceneza-4e08d for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2026-10-19T16:52:43.013Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:43.014Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:43.016Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions [none]
+[debug] [2026-10-19T16:52:43.017Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions  x-goog-user-project=sceneza-4e08d
+[debug] [2026-10-19T16:52:43.017Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2026-10-19T16:52:52.799Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions 200
+[debug] [2026-10-19T16:52:52.800Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'sceneza-4e08d'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-10-19T16:52:52.809Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:52.809Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:52.809Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/sceneza-4e08d/databases/(default) [none]
+[debug] [2026-10-19T16:52:54.828Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/sceneza-4e08d/databases/(default) 200
+[debug] [2026-10-19T16:52:54.829Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/sceneza-4e08d/databases/(default) {"name":"projects/sceneza-4e08d/databases/(default)","uid":"fd9f3043-1bbf-47cc-ae1a-e087cd588c39","createTime":"2026-08-13T14:38:04.635777Z","updateTime":"2026-08-13T14:38:04.635777Z","locationId":"africa-south1","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-10-19T15:52:54.793685Z","appEngineIntegrationMode":"DISABLED","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"IKrAoMPFxpcDMIOEnKHvnZYD"}
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2026-10-19T16:52:54.832Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:54.832Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T16:52:54.833Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test [none]
+[debug] [2026-10-19T16:52:54.833Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test [omitted]
+[debug] [2026-10-19T16:53:00.637Z] *** [apiv2] error from fetch(https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test, {"headers":{},"method":"POST","body":"{\"source\":{\"files\":[{\"name\":\"firestore.rules\",\"content\":\"rules_version = '2';\\r\\nservice cloud.firestore {\\r\\n  match /databases/{database}/documents {\\r\\n\\r\\n    function isAdmin() {\\r\\n      return request.auth != null &&\\r\\n        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';\\r\\n    }\\r\\n\\r\\n    function isOwner(uid) {\\r\\n      return request.auth != null && request.auth.uid == uid;\\r\\n    }\\r\\n\\r\\n    // Events: public read, admin-only write\\r\\n    match /events/{eventId} {\\r\\n      allow read: if true;\\r\\n      allow create, update, delete: if isAdmin();\\r\\n    }\\r\\n\\r\\n    // Users: read/write own doc; admins can read all and update for purge cleanup\\r\\n    match /users/{userId} {\\r\\n      allow read: if request.auth != null && (isOwner(userId) || isAdmin());\\r\\n      allow write: if isOwner(userId);\\r\\n      allow update: if isAdmin();\\r\\n    }\\r\\n\\r\\n    // Interests: authenticated users manage their own; admins can delete for purge cleanup\\r\\n    match /interests/{interestId} {\\r\\n      allow read: if request.auth != null;\\r\\n      allow create: if request.auth != null &&\\r\\n        request.resource.data.userId == request.auth.uid;\\r\\n      allow delete: if request.auth != null &&\\r\\n        (resource.data.userId == request.auth.uid || isAdmin());\\r\\n    }\\r\\n\\r\\n    // Venues: public read, admin-only write\\r\\n    match /venues/{venueId} {\\r\\n      allow read: if true;\\r\\n      allow create, update, delete: if isAdmin();\\r\\n    }\\r\\n  }\\r\\n}\\r\\n\"}]}}"}): AggregateError
+[debug] [2026-10-19T16:53:04.902Z] AggregateError [ETIMEDOUT]: 
+    at internalConnectMultiple (node:net:1193:18)
+    at afterConnectMultiple (node:net:1783:7)
+[error] 
+[error] Error: Failed to make request to https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test
+[debug] [2026-10-19T17:06:26.360Z] ----------------------------------------------------------------------
+[debug] [2026-10-19T17:06:26.363Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tshepo\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore:rules
+[debug] [2026-10-19T17:06:26.363Z] CLI Version:   15.28.2
+[debug] [2026-10-19T17:06:26.364Z] Platform:      win32
+[debug] [2026-10-19T17:06:26.364Z] Node Version:  v24.15.0
+[debug] [2026-10-19T17:06:26.364Z] Detected Agent: unknown
+[debug] [2026-10-19T17:06:26.364Z] Time:          Mon Oct 19 2026 19:06:26 GMT+0200 (South Africa Standard Time)
+[debug] [2026-10-19T17:06:26.365Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-19T17:06:28.089Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-19T17:06:28.090Z] > authorizing via signed-in user (diphokoobe@gmail.com)
+[debug] [2026-10-19T17:06:28.090Z] [iam] checking project sceneza-4e08d for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2026-10-19T17:06:28.106Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:28.106Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:28.108Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions [none]
+[debug] [2026-10-19T17:06:28.108Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions  x-goog-user-project=sceneza-4e08d
+[debug] [2026-10-19T17:06:28.108Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2026-10-19T17:06:31.198Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions 200
+[debug] [2026-10-19T17:06:31.199Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sceneza-4e08d:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'sceneza-4e08d'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-10-19T17:06:31.207Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:31.207Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:31.207Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/sceneza-4e08d/databases/(default) [none]
+[debug] [2026-10-19T17:06:31.945Z] *** [apiv2] error from fetch(https://firestore.googleapis.com/v1/projects/sceneza-4e08d/databases/(default), {"headers":{},"method":"GET"}): AggregateError
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2026-10-19T17:06:31.948Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:31.948Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:31.948Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test [none]
+[debug] [2026-10-19T17:06:31.948Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test [omitted]
+[debug] [2026-10-19T17:06:34.247Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test 200
+[debug] [2026-10-19T17:06:34.248Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d:test {}
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2026-10-19T17:06:34.249Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:34.249Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:34.250Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases pageSize=10&pageToken=
+[debug] [2026-10-19T17:06:36.341Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases 200
+[debug] [2026-10-19T17:06:36.342Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases {"releases":[{"name":"projects/sceneza-4e08d/releases/cloud.firestore","rulesetName":"projects/sceneza-4e08d/rulesets/0cb8f56b-2b17-4d32-8253-d2c96acb1719","createTime":"2026-08-13T14:38:08.284794Z","updateTime":"2026-08-13T17:21:48.757797Z"}]}
+[debug] [2026-10-19T17:06:36.342Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:36.342Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:36.342Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets/0cb8f56b-2b17-4d32-8253-d2c96acb1719 [none]
+[debug] [2026-10-19T17:06:37.595Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets/0cb8f56b-2b17-4d32-8253-d2c96acb1719 200
+[debug] [2026-10-19T17:06:37.595Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets/0cb8f56b-2b17-4d32-8253-d2c96acb1719 [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2026-10-19T17:06:37.596Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:37.597Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:37.597Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets [none]
+[debug] [2026-10-19T17:06:37.597Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets [omitted]
+[debug] [2026-10-19T17:06:38.291Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets 200
+[debug] [2026-10-19T17:06:38.291Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/rulesets {"name":"projects/sceneza-4e08d/rulesets/9e608ff0-64eb-4bdb-aaa9-f0532fb4c772","source":{"files":[{"content":"rules_version = '2';\r\nservice cloud.firestore {\r\n  match /databases/{database}/documents {\r\n\r\n    function isAdmin() {\r\n      return request.auth != null &&\r\n        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';\r\n    }\r\n\r\n    function isOwner(uid) {\r\n      return request.auth != null && request.auth.uid == uid;\r\n    }\r\n\r\n    // Events: public read, admin-only write\r\n    match /events/{eventId} {\r\n      allow read: if true;\r\n      allow create, update, delete: if isAdmin();\r\n    }\r\n\r\n    // Users: read/write own doc; admins can read all and update for purge cleanup\r\n    match /users/{userId} {\r\n      allow read: if request.auth != null && (isOwner(userId) || isAdmin());\r\n      allow write: if isOwner(userId);\r\n      allow update: if isAdmin();\r\n    }\r\n\r\n    // Interests: authenticated users manage their own; admins can delete for purge cleanup\r\n    match /interests/{interestId} {\r\n      allow read: if request.auth != null;\r\n      allow create: if request.auth != null &&\r\n        request.resource.data.userId == request.auth.uid;\r\n      allow delete: if request.auth != null &&\r\n        (resource.data.userId == request.auth.uid || isAdmin());\r\n    }\r\n\r\n    // Venues: public read, admin-only write\r\n    match /venues/{venueId} {\r\n      allow read: if true;\r\n      allow create, update, delete: if isAdmin();\r\n    }\r\n  }\r\n}\r\n","name":"firestore.rules"}]},"createTime":"2026-10-19T17:06:38.072495Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2026-10-19T17:06:38.291Z] [rules] created ruleset projects/sceneza-4e08d/rulesets/9e608ff0-64eb-4bdb-aaa9-f0532fb4c772
+[debug] [2026-10-19T17:06:38.291Z] [rules] releasing cloud.firestore with ruleset projects/sceneza-4e08d/rulesets/9e608ff0-64eb-4bdb-aaa9-f0532fb4c772
+[debug] [2026-10-19T17:06:38.292Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:38.292Z] Checked if tokens are valid: true, expires at: 1792430905295
+[debug] [2026-10-19T17:06:38.292Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases/cloud.firestore [none]
+[debug] [2026-10-19T17:06:38.292Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases/cloud.firestore {"release":{"name":"projects/sceneza-4e08d/releases/cloud.firestore","rulesetName":"projects/sceneza-4e08d/rulesets/9e608ff0-64eb-4bdb-aaa9-f0532fb4c772"}}
+[debug] [2026-10-19T17:06:39.504Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases/cloud.firestore 200
+[debug] [2026-10-19T17:06:39.504Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/sceneza-4e08d/releases/cloud.firestore {"name":"projects/sceneza-4e08d/releases/cloud.firestore","rulesetName":"projects/sceneza-4e08d/rulesets/9e608ff0-64eb-4bdb-aaa9-f0532fb4c772","createTime":"2026-08-13T14:38:08.284794Z","updateTime":"2026-10-19T17:06:38.831924Z"}
+[debug] [2026-10-19T17:06:39.504Z] [rules] updated release projects/sceneza-4e08d/releases/cloud.firestore
+[info] +  firestore: released rules firestore.rules to cloud.firestore 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/sceneza-4e08d/overview

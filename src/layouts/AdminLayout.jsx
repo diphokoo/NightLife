@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useExpiredEventPurge } from '../hooks/useEvents';
 import logo from '../assets/logo.png';
 
 const adminLinks = [
@@ -24,6 +25,7 @@ const AdminLayout = ({ children }) => {
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useExpiredEventPurge();
 
   const handleLogout = () => { logout(); navigate('/'); };
 

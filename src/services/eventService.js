@@ -1,6 +1,6 @@
 import {
   collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
-  query, where, orderBy, limit, serverTimestamp,
+  query, where, orderBy, limit, serverTimestamp, onSnapshot,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
@@ -51,9 +51,26 @@ export const isEventPassed = (event) => {
 };
 
 export const eventService = {
+  // Real-time listener — calls onChange(events) whenever Firestore data changes.
+  // Returns an unsubscribe function. Applies the same client-side filters.
+  subscribe(filters = {}, onChange) {
+    return onSnapshot(collection(db, EVENTS), (snapshot) => {
+      const all = applyClientFilters(snapToDocs(snapshot).filter(e => !isEventPassed(e)), filters)
+      const page = filters.page || 1
+      const pageLimit = filters.limit || 12
+      const start = (page - 1) * pageLimit
+      onChange({
+        events: all.slice(start, start + pageLimit),
+        total: all.length,
+        page,
+        totalPages: Math.ceil(all.length / pageLimit) || 1,
+      })
+    })
+  },
+
   async getAll(filters = {}) {
     const snapshot = await getDocs(collection(db, EVENTS));
-    let events = applyClientFilters(snapToDocs(snapshot), filters);
+    let events = applyClientFilters(snapToDocs(snapshot).filter(e => !isEventPassed(e)), filters);
     const page = filters.page || 1;
     const pageLimit = filters.limit || 12;
     const start = (page - 1) * pageLimit;
@@ -88,18 +105,18 @@ export const eventService = {
 
   async getRelated(event) {
     const q = query(collection(db, EVENTS), where('category', '==', event.category), limit(5));
-    return snapToDocs(await getDocs(q)).filter(e => e.id !== event.id).slice(0, 4);
+    return snapToDocs(await getDocs(q)).filter(e => e.id !== event.id && !isEventPassed(e)).slice(0, 4);
   },
 
   async getByIds(ids) {
     if (!ids?.length) return [];
     const all = snapToDocs(await getDocs(collection(db, EVENTS)));
-    return all.filter(e => ids.includes(e.id));
+    return all.filter(e => ids.includes(e.id) && !isEventPassed(e));
   },
 
   async search(queryStr) {
     if (!queryStr || queryStr.length < 2) return [];
-    const all = snapToDocs(await getDocs(collection(db, EVENTS)));
+    const all = snapToDocs(await getDocs(collection(db, EVENTS))).filter(e => !isEventPassed(e));
     const q = queryStr.toLowerCase();
     return all.filter(e =>
       e.title?.toLowerCase().includes(q) ||
@@ -121,8 +138,18 @@ export const eventService = {
   },
 
   async update(id, data) {
-    await updateDoc(doc(db, EVENTS, id), { ...data, updatedAt: serverTimestamp() });
-    return { id, ...data };
+    // Track which shared fields were manually changed so sync won't overwrite them
+    const SHARED_FIELDS = ['title', 'description', 'date', 'time', 'endTime', 'venue', 'address', 'city', 'image', 'category', 'artist', 'price', 'ticketUrl']
+    const manuallyChanged = Object.keys(data).filter(k => SHARED_FIELDS.includes(k))
+    const updatePayload = { ...data, updatedAt: serverTimestamp() }
+    if (manuallyChanged.length > 0) {
+      // Merge new overrides with any existing ones
+      const snap = await getDoc(doc(db, EVENTS, id))
+      const existing = snap.exists() ? (snap.data().manualOverrides ?? []) : []
+      updatePayload.manualOverrides = [...new Set([...existing, ...manuallyChanged])]
+    }
+    await updateDoc(doc(db, EVENTS, id), updatePayload)
+    return { id, ...data }
   },
 
   async delete(id) {

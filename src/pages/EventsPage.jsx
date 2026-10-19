@@ -163,19 +163,24 @@ const EventsPage = () => {
 
   const activeFilterCount = Object.values(filters).filter(v => v !== '' && v !== undefined && v !== 'newest').length;
 
-  const fetchEvents = useCallback(async () => {
+  const fetchEvents = useCallback(() => {
     setLoading(true);
-    try {
-      const res = await eventService.getAll({ ...filters, page, limit: 12, status: 'published' });
-      setEvents(res.events);
-      setTotal(res.total);
-      setTotalPages(res.totalPages);
-    } finally {
-      setLoading(false);
-    }
+    const unsub = eventService.subscribe(
+      { ...filters, page, limit: 12, status: 'published' },
+      (res) => {
+        setEvents(res.events);
+        setTotal(res.total);
+        setTotalPages(res.totalPages);
+        setLoading(false);
+      }
+    );
+    return unsub;
   }, [filters, page]);
 
-  useEffect(() => { fetchEvents(); }, [fetchEvents]);
+  useEffect(() => {
+    const unsub = fetchEvents();
+    return () => unsub?.();
+  }, [fetchEvents]);
 
   const updateFilter = (update) => {
     setFilters(prev => ({ ...prev, ...update }));

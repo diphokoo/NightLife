@@ -10,6 +10,10 @@ const EventCard = ({ event, index = 0, variant = 'default' }) => {
   const { toggle, isBookmarked } = useBookmarks();
   const [imgError, setImgError] = useState(false);
   const saved = isBookmarked(event.id);
+  // Treat missing/empty image as an error so the fallback renders immediately
+  const imgSrc = (!imgError && event.image && event.image.startsWith('http'))
+    ? event.image
+    : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=60'
 
   const handleBookmark = (e) => {
     e.preventDefault();
@@ -37,7 +41,7 @@ const EventCard = ({ event, index = 0, variant = 'default' }) => {
         <Link to={`/events/${event.id}`} className="flex gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all group">
           <div className="relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden">
             <img
-              src={imgError ? 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&q=60' : event.image}
+              src={imgSrc}
               alt={event.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               onError={() => setImgError(true)}
@@ -77,7 +81,7 @@ const EventCard = ({ event, index = 0, variant = 'default' }) => {
         {/* Image */}
         <div className="relative h-48 overflow-hidden">
           <img
-            src={imgError ? 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=60' : event.image}
+            src={imgSrc}
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"

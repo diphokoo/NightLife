@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { eventService } from '../services/eventService';
+import { collection, getDocs, writeBatch, query, where } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { eventService, isEventPassed } from '../services/eventService';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useEvents = (filters = {}) => {
   const [data, setData] = useState({ events: [], total: 0, totalPages: 1 });
@@ -81,6 +84,58 @@ export const useAnimatedCounter = (target, duration = 1500) => {
   }, [target, duration]);
 
   return count;
+};
+
+// Purges expired events from Firestore including their interests and bookmarks.
+// Runs once on mount, then every 60 minutes. Only executes when the current user is an admin.
+export const useExpiredEventPurge = () => {
+  const { isAdmin } = useAuth();
+
+  const runPurge = useCallback(async () => {
+    if (!isAdmin) return;
+    const snapshot = await getDocs(collection(db, 'events'));
+    const expired = snapshot.docs.filter(d => isEventPassed(d.data()) && !d.data().isRecurring);
+    if (!expired.length) return;
+
+    const expiredIds = expired.map(d => d.id);
+
+    // Delete event docs
+    const eventBatch = writeBatch(db);
+    expired.forEach(d => eventBatch.delete(d.ref));
+    await eventBatch.commit();
+
+    // Delete interests and clean bookmarks in slices of 30 (Firestore 'in' limit)
+    for (let i = 0; i < expiredIds.length; i += 30) {
+      const slice = expiredIds.slice(i, i + 30);
+
+      const interestsSnap = await getDocs(
+        query(collection(db, 'interests'), where('eventId', 'in', slice))
+      );
+      if (!interestsSnap.empty) {
+        const iBatch = writeBatch(db);
+        interestsSnap.docs.forEach(d => iBatch.delete(d.ref));
+        await iBatch.commit();
+      }
+
+      const usersSnap = await getDocs(
+        query(collection(db, 'users'), where('bookmarks', 'array-contains-any', slice))
+      );
+      if (!usersSnap.empty) {
+        const uBatch = writeBatch(db);
+        usersSnap.docs.forEach(userDoc => {
+          const updated = (userDoc.data().bookmarks || []).filter(id => !slice.includes(id));
+          uBatch.update(userDoc.ref, { bookmarks: updated });
+        });
+        await uBatch.commit();
+      }
+    }
+  }, [isAdmin]);
+
+  useEffect(() => {
+    runPurge();
+    const interval = setInterval(runPurge, 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [runPurge]);
 };
 
 export const useIntersectionObserver = (options = {}) => {

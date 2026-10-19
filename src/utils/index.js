@@ -1,18 +1,39 @@
 import { format, formatDistanceToNow, isAfter, isBefore, parseISO } from 'date-fns';
 
+const safeDate = (date) => {
+  if (!date) return null;
+  const s = String(date);
+  // Date-only strings (YYYY-MM-DD) must be parsed as local time, not UTC
+  // parseISO treats them as UTC which shifts the day in UTC+ timezones
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const [y, m, d] = s.split('-').map(Number);
+    const local = new Date(y, m - 1, d);
+    return isNaN(local.getTime()) ? null : local;
+  }
+  try {
+    const d = parseISO(s);
+    if (!isNaN(d.getTime())) return d;
+  } catch { /* fall through */ }
+  try {
+    const d = new Date(date);
+    if (!isNaN(d.getTime())) return d;
+  } catch { /* fall through */ }
+  return null;
+};
+
 export const formatDate = (date, fmt = 'EEE, dd MMM yyyy') => {
-  try { return format(parseISO(date), fmt); }
-  catch { return format(new Date(date), fmt); }
+  const d = safeDate(date);
+  return d ? format(d, fmt) : 'Date TBC';
 };
 
 export const formatTime = (date) => {
-  try { return format(parseISO(date), 'HH:mm'); }
-  catch { return format(new Date(date), 'HH:mm'); }
+  const d = safeDate(date);
+  return d ? format(d, 'HH:mm') : 'Time TBC';
 };
 
 export const formatRelative = (date) => {
-  try { return formatDistanceToNow(parseISO(date), { addSuffix: true }); }
-  catch { return formatDistanceToNow(new Date(date), { addSuffix: true }); }
+  const d = safeDate(date);
+  return d ? formatDistanceToNow(d, { addSuffix: true }) : 'Date TBC';
 };
 
 export const isUpcoming = (date) => isAfter(new Date(date), new Date());
